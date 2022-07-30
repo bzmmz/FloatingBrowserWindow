@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FloatingBrowserWindow", "FloatingBrowserWindow\FloatingBrowserWindow.vcxproj", "{31DD000B-CACC-4E3E-BDAB-694ECF4FD98E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FloatingBrowserWindow", "FloatingBrowserWindow\FloatingBrowserWindow.vcxproj", "{96D7F988-42BC-42CA-A222-C299E0EB7431}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{31DD000B-CACC-4E3E-BDAB-694ECF4FD98E}.Debug|x64.ActiveCfg = Debug|x64
-		{31DD000B-CACC-4E3E-BDAB-694ECF4FD98E}.Debug|x64.Build.0 = Debug|x64
-		{31DD000B-CACC-4E3E-BDAB-694ECF4FD98E}.Release|x64.ActiveCfg = Release|x64
-		{31DD000B-CACC-4E3E-BDAB-694ECF4FD98E}.Release|x64.Build.0 = Release|x64
+		{96D7F988-42BC-42CA-A222-C299E0EB7431}.Debug|x64.ActiveCfg = Debug|x64
+		{96D7F988-42BC-42CA-A222-C299E0EB7431}.Debug|x64.Build.0 = Debug|x64
+		{96D7F988-42BC-42CA-A222-C299E0EB7431}.Release|x64.ActiveCfg = Release|x64
+		{96D7F988-42BC-42CA-A222-C299E0EB7431}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {770AE1AF-849B-432C-9AAE-2260CE74AE78}
+		SolutionGuid = {1FCDD1A7-70AA-4727-AD14-A5A30996355C}
 	EndGlobalSection
 EndGlobal
