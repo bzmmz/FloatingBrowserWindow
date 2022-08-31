@@ -1,2 +1,4 @@
 ﻿  ConfigManager.cpp
+  InnerBrowser.cpp
+  main.cpp
   FloatingBrowserWindow.vcxproj -> E:\Gitee\FloatingBrowserWindow\x64\Debug\FloatingBrowserWindow.exe

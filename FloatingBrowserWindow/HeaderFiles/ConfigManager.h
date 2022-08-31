@@ -11,14 +11,14 @@ namespace BrowserConfig
 {
     struct Config
     {
-        double transparent{};
+        double transparent = 50.0f;
         std::string css_file;
         int x{};
         int y{};
-        int width{};
-        int height{};
+        int width = 800;
+        int height = 600;
         double scale = 100;
-        bool is_transparent{};
+        bool is_transparent = true;
         std::string room_url = "http://localhost:12450/room/test?minGiftPrice=7&showDanmaku=true&showGift=true&showGiftName=false&mergeSimilarDanmaku=false&mergeGift=true&maxNumber=60&blockGiftDanmaku=true&blockLevel=0&blockNewbie=false&blockNotMobileVerified=false&blockKeywords=&blockUsers=&blockMedalLevel=0&relayMessagesByServer=false&autoTranslate=false&giftUsernamePronunciation=&emoticons=%5B%5D&lang=zh";
     };
 
@@ -42,4 +42,5 @@ public:
     ConfigManager();
     void LoadConfig();
     void SaveConfig();
+    BrowserConfig::Config GetConfig();
 };

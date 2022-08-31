@@ -24,7 +24,7 @@ class WebView : public QWebEngineView
 class InnerBrowser : public QWidget
 {
 private:
-    BrowserConfig::Config browser_config;
+    ConfigManager manager;
     QHBoxLayout* layout;
     WebView* webview;
 
@@ -33,7 +33,10 @@ public:
     InnerBrowser();
     ~InnerBrowser() override;
     void lock(bool on);
-
+    void ApplyConfig(BrowserConfig::Config config);
+    void MoveWindow(float x, float y);
+    void ResizeWindows(float width, float height);
+    void ScaleWindowPage(float scale);
 
     void InitWindowByConfig();
 };

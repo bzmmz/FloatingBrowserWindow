@@ -57,6 +57,7 @@ void ConfigManager::LoadConfig()
         QString p = QString::fromLocal8Bit(s.c_str());
         QMessageBox::warning(nullptr, p, QStringLiteral("无配置文件或配置文件损坏"),QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         read->close();
+        SaveConfig();
     }
     else
     {
@@ -89,4 +90,9 @@ void ConfigManager::SaveConfig()
     write = new ofstream(config_file_name, ios::out);
     *write << j.dump();
     write->close();
+}
+
+BrowserConfig::Config ConfigManager::GetConfig()
+{
+    return config;
 }
