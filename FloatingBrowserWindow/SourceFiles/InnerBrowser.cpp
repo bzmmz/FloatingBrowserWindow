@@ -6,13 +6,27 @@ void InnerBrowser::load_config()
     return;
 }
 
+void InnerBrowser::closeEvent(QCloseEvent* event)
+{
+    manager.SaveCurrentConfig(this);
+}
+
 InnerBrowser::InnerBrowser()
 {
+    
     load_config();
-    InitWindowByConfig();
+    auto config = manager.GetConfig();
+    this->lock(true);
+    //移动窗口
+    this->move(config.x, config.y);
+    //调整窗口大小
+    this->resize(config.width, config.height);
+    //调节页面缩放比列
+    //调节透明度
+    this->setWindowOpacity(config.transparent);
 
 
-    this->setWindowTitle(QStringLiteral("测试窗口"));
+    this->setWindowTitle(QString::fromLocal8Bit(config.windowtitle.c_str()));
     
     layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
@@ -22,7 +36,7 @@ InnerBrowser::InnerBrowser()
     this->layout->addWidget(this->webview);
     this->setLayout(this->layout);
 
-    auto config = manager.GetConfig();
+    
     //移动和缩放
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
@@ -46,14 +60,6 @@ void InnerBrowser::lock(bool on)
 
 void InnerBrowser::ApplyConfig(BrowserConfig::Config config)
 {
-    this->lock(true);
-    //移动窗口
-    this->move(config.x, config.y);
-    //调整窗口大小
-    this->resize(config.width, config.height);
-    //调节页面缩放比列
-    //调节透明度
-    this->setWindowOpacity(config.transparent);
 }
 
 void InnerBrowser::MoveWindow(float x, float y)
@@ -70,11 +76,4 @@ void InnerBrowser::ScaleWindowPage(float scale)
 {
     this->webview->page()->setZoomFactor(scale);
 }
-
-
-void InnerBrowser::InitWindowByConfig()
-{
-    ApplyConfig(manager.GetConfig());
-}
-
 

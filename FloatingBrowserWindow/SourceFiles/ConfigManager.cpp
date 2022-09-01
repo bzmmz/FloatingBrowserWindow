@@ -92,6 +92,19 @@ void ConfigManager::SaveConfig()
     write->close();
 }
 
+void ConfigManager::SaveCurrentConfig(QWidget* window)
+{
+    config.x = window->x();
+    config.y = window->y();
+    config.width = window->width();
+    config.height = window->height();
+    config.transparent = window->windowOpacity();
+    config.windowtitle = window->windowTitle().toStdString();
+
+    SaveConfig();
+    
+}
+
 BrowserConfig::Config ConfigManager::GetConfig()
 {
     return config;

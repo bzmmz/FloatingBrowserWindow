@@ -3,6 +3,22 @@
 #include "ConfigManager.h"
 #include "InnerBrowser.h"
 #include <QTextCodec>
+#include "ui_MainWindow.h"
+
+//class MainWindow : public QMainWindow
+//{
+//
+//private:
+//    Ui::MainWindow ui;
+//public:
+//    MainWindow()
+//    {
+//        ui.setupUi(this);
+//        auto browser = new InnerBrowser();
+//        this->setCentralWidget(browser);
+//    }
+//};
+
 
 int main(int argc, char *argv[])
 {

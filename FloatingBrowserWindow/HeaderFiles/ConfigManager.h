@@ -3,6 +3,7 @@
 #include <fstream>
 #include <string>
 #include <sstream>
+#include <QtWidgets/QtWidgets>
 using namespace std;
 using namespace nlohmann;
 
@@ -20,6 +21,7 @@ namespace BrowserConfig
         double scale = 100;
         bool is_transparent = true;
         std::string room_url = "http://localhost:12450/room/test?minGiftPrice=7&showDanmaku=true&showGift=true&showGiftName=false&mergeSimilarDanmaku=false&mergeGift=true&maxNumber=60&blockGiftDanmaku=true&blockLevel=0&blockNewbie=false&blockNotMobileVerified=false&blockKeywords=&blockUsers=&blockMedalLevel=0&relayMessagesByServer=false&autoTranslate=false&giftUsernamePronunciation=&emoticons=%5B%5D&lang=zh";
+        string windowtitle = "新窗口";
     };
 
     void to_json(json& j, const Config& config);
@@ -42,5 +44,6 @@ public:
     ConfigManager();
     void LoadConfig();
     void SaveConfig();
+    void SaveCurrentConfig(QWidget* window);
     BrowserConfig::Config GetConfig();
 };

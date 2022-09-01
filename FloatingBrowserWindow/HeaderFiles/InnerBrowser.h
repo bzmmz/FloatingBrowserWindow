@@ -3,12 +3,10 @@
 #include <QUrl>
 #include <QWebEngineView>
 #include <QWebEngineScript>
-#include <QWidget>
+#include <QMainWindow>
 #include <QHBoxLayout>
 #include <string>
-
 #include "ConfigManager.h"
-
 
 class WebView : public QWebEngineView
 {
@@ -27,8 +25,10 @@ private:
     ConfigManager manager;
     QHBoxLayout* layout;
     WebView* webview;
-
+    //Ui::MainWindow ui;
     void load_config();
+protected:
+    void closeEvent(QCloseEvent* event) override;
 public:
     InnerBrowser();
     ~InnerBrowser() override;
@@ -38,7 +38,6 @@ public:
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
 
-    void InitWindowByConfig();
 };
 
 
