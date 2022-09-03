@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\Tray.cpp" />
     <ClCompile Include="SourceFiles\ConfigManager.cpp" />
     <ClCompile Include="SourceFiles\InnerBrowser.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
@@ -94,9 +95,14 @@
     <ClInclude Include="HeaderFiles\InnerBrowser.h" />
     <ClInclude Include="HeaderFiles\json.hpp" />
     <ClInclude Include="HeaderFiles\ConfigManager.h" />
+    <ClInclude Include="HeaderFiles\StringHelper.h" />
+    <ClInclude Include="HeaderFiles\Tray.h" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="HeaderFiles\MainWindow.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Resources\heart.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

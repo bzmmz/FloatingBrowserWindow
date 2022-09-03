@@ -7,6 +7,7 @@
 #include <QHBoxLayout>
 #include <string>
 #include "ConfigManager.h"
+#include "Tray.h"
 
 class WebView : public QWebEngineView
 {
@@ -21,14 +22,7 @@ class WebView : public QWebEngineView
  */
 class InnerBrowser : public QWidget
 {
-private:
-    ConfigManager manager;
-    QHBoxLayout* layout;
-    WebView* webview;
-    //Ui::MainWindow ui;
-    void load_config();
-protected:
-    void closeEvent(QCloseEvent* event) override;
+    friend class Tray;
 public:
     InnerBrowser();
     ~InnerBrowser() override;
@@ -37,6 +31,20 @@ public:
     void MoveWindow(float x, float y);
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
+private:
+    ConfigManager manager;
+    QHBoxLayout *layout;
+    WebView *webview;
+    Tray* tray;
+    void load_config();
+    void InitSystemTray();
+private slots:
+    //点击托盘时的响应函数
+    void IconClicked(QSystemTrayIcon::ActivationReason reason); 
+    
+protected:
+    void closeEvent(QCloseEvent* event) override;
+
 
 };
 

@@ -4,6 +4,7 @@
         "qwebengineview": "cpp",
         "fstream": "cpp",
         "xlocmes": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "qgroupbox": "cpp"
     },
 }

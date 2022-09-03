@@ -1,9 +1,29 @@
 ﻿#include "InnerBrowser.h"
+#include "StringHelper.h"
 #include <QString>
 void InnerBrowser::load_config()
 {
     manager.LoadConfig();
     return;
+}
+
+void InnerBrowser::InitSystemTray()
+{
+    tray = new Tray(this);
+}
+
+void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
+{
+    //左键单击，显示窗口
+    if (reason == QSystemTrayIcon::Trigger)
+    {
+        this->show();
+    }
+    //右键显示菜单
+    else if(reason == QSystemTrayIcon::Context)
+    {
+        tray->ShowMenu();
+    }
 }
 
 void InnerBrowser::closeEvent(QCloseEvent* event)
@@ -13,7 +33,7 @@ void InnerBrowser::closeEvent(QCloseEvent* event)
 
 InnerBrowser::InnerBrowser()
 {
-    
+    InitSystemTray();
     load_config();
     auto config = manager.GetConfig();
     this->lock(true);
@@ -26,7 +46,7 @@ InnerBrowser::InnerBrowser()
     this->setWindowOpacity(config.transparent);
 
 
-    this->setWindowTitle(QString::fromLocal8Bit(config.windowtitle.c_str()));
+    this->setWindowTitle(SH::str2qstr(config.windowtitle));
     
     layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);

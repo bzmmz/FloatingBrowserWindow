@@ -17,6 +17,7 @@ void BrowserConfig::to_json(json& j, const Config& config)
         {"scale", config.scale},
         {"is_transparent", config.is_transparent},
         {"room_url", config.room_url},
+        {"windowtitle", config.windowtitle},
     };
 }
 
@@ -31,6 +32,7 @@ void BrowserConfig::from_json(const json& j, Config& config)
     j.at("scale").get_to(config.scale);
     j.at("is_transparent").get_to(config.is_transparent);
     j.at("room_url").get_to(config.room_url);
+    j.at("windowtitle").get_to(config.windowtitle);
 }
 
 void ConfigManager::ReadWholeFile(stringstream& ss, ifstream* read)
@@ -57,7 +59,6 @@ void ConfigManager::LoadConfig()
         QString p = QString::fromLocal8Bit(s.c_str());
         QMessageBox::warning(nullptr, p, QStringLiteral("无配置文件或配置文件损坏"),QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
         read->close();
-        SaveConfig();
     }
     else
     {
