@@ -55,7 +55,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <IncludePath>./HeaderFiles;D:\Qt5\5.15.2\msvc2019_64\include;$(IncludePath)</IncludePath>
+    <IncludePath>.\HeaderFiles\PopDialogs;.\HeaderFiles;D:\Qt5\5.15.2\msvc2019_64\include;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
@@ -86,6 +86,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\PopDialogs\StringInputDialog.cpp" />
     <ClCompile Include="SourceFiles\Tray.cpp" />
     <ClCompile Include="SourceFiles\ConfigManager.cpp" />
     <ClCompile Include="SourceFiles\InnerBrowser.cpp" />
@@ -96,13 +97,15 @@
     <ClInclude Include="HeaderFiles\json.hpp" />
     <ClInclude Include="HeaderFiles\ConfigManager.h" />
     <ClInclude Include="HeaderFiles\StringHelper.h" />
-    <ClInclude Include="HeaderFiles\Tray.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtUic Include="HeaderFiles\MainWindow.ui" />
+    <QtMoc Include="HeaderFiles\PopDialogs\StringInputDialog.h" />
+    <QtMoc Include="HeaderFiles\Tray.h" />
+    <ClInclude Include="x64\Debug\uic\ui_StringInputDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\heart.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtUic Include="HeaderFiles\PopDialogs\StringInputDialog.ui" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

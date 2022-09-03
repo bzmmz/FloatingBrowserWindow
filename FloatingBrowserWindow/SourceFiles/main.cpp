@@ -3,7 +3,6 @@
 #include "ConfigManager.h"
 #include "InnerBrowser.h"
 #include <QTextCodec>
-#include "ui_MainWindow.h"
 
 //class MainWindow : public QMainWindow
 //{
