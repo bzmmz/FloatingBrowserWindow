@@ -23,6 +23,11 @@ class WebView : public QWebEngineView
 class InnerBrowser : public QWidget
 {
     friend class Tray;
+    Q_OBJECT
+public slots:
+    void SetWindowTitle(QString title);
+signals:
+    void MainWindowCloseSignal();
 public:
     InnerBrowser();
     ~InnerBrowser() override;
@@ -31,6 +36,7 @@ public:
     void MoveWindow(float x, float y);
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
+    CM_LoadConfigCondition GetLoadCondition();
 private:
     ConfigManager manager;
     QHBoxLayout *layout;
@@ -40,8 +46,7 @@ private:
     void InitSystemTray();
 private slots:
     //点击托盘时的响应函数
-    void IconClicked(QSystemTrayIcon::ActivationReason reason); 
-    
+    void IconClicked(QSystemTrayIcon::ActivationReason reason);
 protected:
     void closeEvent(QCloseEvent* event) override;
 

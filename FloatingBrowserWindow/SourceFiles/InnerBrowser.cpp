@@ -28,13 +28,21 @@ void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 
 void InnerBrowser::closeEvent(QCloseEvent* event)
 {
+    emit MainWindowCloseSignal();
     manager.SaveCurrentConfig(this);
+}
+
+void InnerBrowser::SetWindowTitle(QString title)
+{
+    this->setWindowTitle(title);
+    this->webview->titleChanged(title);
 }
 
 InnerBrowser::InnerBrowser()
 {
-    InitSystemTray();
+    
     load_config();
+    InitSystemTray();
     auto config = manager.GetConfig();
     this->lock(true);
     //移动窗口
@@ -95,5 +103,10 @@ void InnerBrowser::ResizeWindows(float width, float height)
 void InnerBrowser::ScaleWindowPage(float scale)
 {
     this->webview->page()->setZoomFactor(scale);
+}
+
+CM_LoadConfigCondition InnerBrowser::GetLoadCondition()
+{
+    return this->manager.GetLoadConfigCondition();
 }
 

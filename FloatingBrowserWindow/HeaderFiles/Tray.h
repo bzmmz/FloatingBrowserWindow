@@ -11,17 +11,20 @@ class Tray : public QObject
 {
    Q_OBJECT
 public:
-    void SetVisiable(bool visible);
     
     Tray(InnerBrowser* window);
     void ShowMenu();
+    InnerBrowser* GetWindow();
+    void ShowMessage(QString message);
     
 public slots:
     void PopModifyTitleWindow();
-    void SetWindowTitle(QString title);
+    
+    
 private:
     void Init();
     void InitMenu();
+    void ShowWindowLoadConfigInfo();
     InnerBrowser* window;
     QSystemTrayIcon *trayicon;  //托盘核心
     QMenu *menu;

@@ -54,29 +54,32 @@ void ConfigManager::LoadConfig()
 {
     if (read->fail())
     {
-        string s = "配置文件错误";
-        QTextCodec *codec = QTextCodec::codecForName("UTF-8");
-        QString p = QString::fromLocal8Bit(s.c_str());
-        QMessageBox::warning(nullptr, p, QStringLiteral("无配置文件或配置文件损坏"),QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-        read->close();
+        load_config_condition = CM_NO_CONFIG_FILE;
     }
     else
     {
         stringstream ss;
         ReadWholeFile(ss, read);
         read->close();
-        json j = json::parse(ss.str());
         try
         {
-            config = j.get<BrowserConfig::Config>();
-            QMessageBox::information(nullptr, QStringLiteral("成功"), QStringLiteral("加载配置文件成功"),QMessageBox::Ok);
+            json j = json::parse(ss.str());
+            try
+            {
+                config = j.get<BrowserConfig::Config>();
+                load_config_condition = CM_SUCCESS_LOAD_FILE;
+            }
+            catch(const std::exception& e)
+            {
+                load_config_condition = CM_ERROR_CONFIG_FILE;
+            }
         }
-        catch(const std::exception& e)
+        catch (const std::exception& e)
         {
-            std::cerr << e.what() << '\n';
-            QMessageBox::warning(nullptr, QStringLiteral("配置文件出错"), QStringLiteral("无配置文件或配置文件损坏"),QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);
-            read->close();
+            load_config_condition = CM_ERROR_CONFIG_FILE;
         }
+        
+        
         
 
 
@@ -109,4 +112,9 @@ void ConfigManager::SaveCurrentConfig(QWidget* window)
 BrowserConfig::Config ConfigManager::GetConfig()
 {
     return config;
+}
+
+CM_LoadConfigCondition ConfigManager::GetLoadConfigCondition()
+{
+    return load_config_condition;
 }

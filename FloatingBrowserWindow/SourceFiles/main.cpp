@@ -2,8 +2,8 @@
 #include <QApplication>
 #include "ConfigManager.h"
 #include "InnerBrowser.h"
+#include "StringHelper.h"
 #include <QTextCodec>
-
 //class MainWindow : public QMainWindow
 //{
 //
@@ -19,6 +19,12 @@
 //};
 
 
+void Test()
+{
+    QString test_str = "啊哈";
+    SH::utf8_2_gbk(test_str);
+}
+
 int main(int argc, char *argv[])
 {
     auto a = new QApplication(argc, argv);
@@ -28,7 +34,7 @@ int main(int argc, char *argv[])
 
     QTextCodec::setCodecForLocale(codec);
         
-
+    //Test();
     a->setQuitOnLastWindowClosed(true);
     auto browser = new InnerBrowser();
     int code = a->exec();

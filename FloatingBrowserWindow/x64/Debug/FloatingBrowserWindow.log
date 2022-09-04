@@ -1,4 +1,4 @@
-﻿  StringInputDialog.cpp
-  moc_StringInputDialog.cpp
-  moc_Tray.cpp
+﻿  InnerBrowser.cpp
+  Tray.cpp
+  main.cpp
   FloatingBrowserWindow.vcxproj -> E:\Gitee\FloatingBrowserWindow\x64\Debug\FloatingBrowserWindow.exe

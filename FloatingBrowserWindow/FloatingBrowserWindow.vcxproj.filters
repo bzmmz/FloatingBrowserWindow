@@ -40,9 +40,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HeaderFiles\InnerBrowser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="HeaderFiles\json.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -71,6 +68,9 @@
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="HeaderFiles\Tray.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+    <QtMoc Include="HeaderFiles\InnerBrowser.h">
       <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>

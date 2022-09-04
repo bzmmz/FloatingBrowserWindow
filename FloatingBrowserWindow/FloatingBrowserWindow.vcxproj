@@ -68,7 +68,7 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Windows</SubSystem>
+      <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
@@ -93,7 +93,7 @@
     <ClCompile Include="SourceFiles\main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="HeaderFiles\InnerBrowser.h" />
+    <QtMoc Include="HeaderFiles\InnerBrowser.h" />
     <ClInclude Include="HeaderFiles\json.hpp" />
     <ClInclude Include="HeaderFiles\ConfigManager.h" />
     <ClInclude Include="HeaderFiles\StringHelper.h" />
