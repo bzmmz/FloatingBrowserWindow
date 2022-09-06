@@ -57,8 +57,16 @@ QString WebView::GetCss()
 
 QString WebView::CombineScript(QString css)
 {
-    auto _css = css.replace("\n","\\n");
+    /*auto _css = css.replace("\n","\\n");
     auto s = JS_LOAD_CSS_FROM_STR + _css + "\\n`));document.head.append(style_node);})();'";
+    return s;*/
+    QString s = QString::fromLatin1("(function() {"\
+                                    "    css = document.createElement('style');"\
+                                    "    css.type = 'text/css';"\
+                                    "    css.id = 'blivechat';"\
+                                    "    document.head.appendChild(css);"\
+                                    "    css.innerText = '%1';"\
+                                    "})()").arg(css.simplified());
     return s;
 }
 
@@ -68,6 +76,8 @@ void WebView::InjectCss(QString css)
     script_engine = new QWebEngineScript();
     script_engine->setInjectionPoint(QWebEngineScript::DocumentReady);
     script_engine->setSourceCode(java_script);
+    script_engine->setRunsOnSubFrames(true);
+    script_engine->setWorldId(QWebEngineScript::ApplicationWorld);
     this->page()->scripts().insert(*script_engine);
 }
 
@@ -114,15 +124,21 @@ InnerBrowser::InnerBrowser()
     this->layout->addWidget(this->webview);
     this->setLayout(this->layout);
 
-    
+    this->webview->load(QUrl(config.room_url));
     //移动和缩放
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
     
     
     this->ScaleWindowPage(config.scale);
+    //去掉窗口阴影达到纯透明效果
+    this->setAttribute(Qt::WA_TranslucentBackground);
+    setWindowFlags(Qt::Tool); //Qt::FramelessWindowHint | 
+    //鼠标穿透
+    this->setAttribute(Qt::WA_TransparentForMouseEvents,true);
+
     this->show();
-    this->webview->load(QUrl(config.room_url));
+    
 
 }
 
