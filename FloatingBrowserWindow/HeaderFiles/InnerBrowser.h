@@ -2,16 +2,47 @@
 #include <Qt>
 #include <QUrl>
 #include <QWebEngineView>
-#include <QWebEngineScript>
-#include <QMainWindow>
-#include <QHBoxLayout>
+#include <QWebEngineScriptCollection>
 #include <string>
 #include "ConfigManager.h"
 #include "Tray.h"
 
+
+
 class WebView : public QWebEngineView
 {
-    
+public:
+    WebView(QString css);
+
+
+
+private:
+
+    //用java_script脚本注入css
+    void InjectCss(QString css);
+    QString css;
+    QString java_script;
+    QWebEngineScript *script_engine;
+
+
+    QString JS_LOAD_CSS_FROM_STR = "\
+        (function(){\
+        let style_node = document.createElement('style');\
+        style_node.append(document.createTextNode(`\n%s\n`));\
+        document.head.append(style_node);\
+        console.log('Additional inline style sheet:\\n', style_node);\
+        })();\
+    ";
+
+    QString JS_LOAD_CSS_FROM_URL = "\
+        (function(){\
+        let link = document.createElement('link');\
+        link.href = '%s';\
+        link.rel = 'stylesheet';\
+        document.head.append(link);\
+        console.log('Additional link to style sheet:\\n', link);\
+        })();\
+    ";
 };
 
 

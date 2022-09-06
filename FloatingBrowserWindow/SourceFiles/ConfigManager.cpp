@@ -1,39 +1,37 @@
 ﻿#include "ConfigManager.h"
-
 #include <iostream>
-
-#include "QMessageBox"
 #include <QString>
-#include <QTextCodec>
+#include "StringHelper.h"
 void BrowserConfig::to_json(json& j, const Config& config)
 {
     j = json{
         {"transparent", config.transparent},
-        {"css_file", config.css_file},
+        {"css", SH::qstr2str(config.css)},
         {"x", config.x},
         {"y", config.y},
         {"width", config.width},
         {"height", config.height},
         {"scale", config.scale},
         {"is_transparent", config.is_transparent},
-        {"room_url", config.room_url},
-        {"windowtitle", config.windowtitle},
+        {"room_url", SH::qstr2str(config.room_url)},
+        {"windowtitle", SH::qstr2str(config.windowtitle)},
     };
 }
 
 void BrowserConfig::from_json(const json& j, Config& config)
 {
     j.at("transparent").get_to(config.transparent);
-    j.at("css_file").get_to(config.css_file);
+    config.css = SH::str2qstr(j.at("css").get<string>());
     j.at("x").get_to(config.x);
     j.at("y").get_to(config.y);
     j.at("width").get_to(config.width);
     j.at("height").get_to(config.height);
     j.at("scale").get_to(config.scale);
     j.at("is_transparent").get_to(config.is_transparent);
-    j.at("room_url").get_to(config.room_url);
-    j.at("windowtitle").get_to(config.windowtitle);
+    config.room_url = SH::str2qstr(j.at("room_url").get<string>());
+    config.windowtitle = SH::str2qstr(j.at("windowtitle").get<string>());
 }
+
 
 void ConfigManager::ReadWholeFile(stringstream& ss, ifstream* read)
 {
@@ -103,7 +101,7 @@ void ConfigManager::SaveCurrentConfig(QWidget* window)
     config.width = window->width();
     config.height = window->height();
     config.transparent = window->windowOpacity();
-    config.windowtitle = window->windowTitle().toStdString();
+    config.windowtitle = window->windowTitle();
 
     SaveConfig();
     

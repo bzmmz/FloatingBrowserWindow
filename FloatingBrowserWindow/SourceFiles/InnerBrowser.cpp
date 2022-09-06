@@ -32,6 +32,21 @@ void InnerBrowser::closeEvent(QCloseEvent* event)
     manager.SaveCurrentConfig(this);
 }
 
+WebView::WebView(QString css)
+{
+    this->css = css;
+    InjectCss(this->css);
+}
+
+void WebView::InjectCss(QString css)
+{
+    java_script = JS_LOAD_CSS_FROM_STR + css;
+    script_engine = new QWebEngineScript();
+    script_engine->setInjectionPoint(QWebEngineScript::DocumentReady);
+    script_engine->setSourceCode(java_script);
+    this->page()->scripts().insert(*script_engine);
+}
+
 void InnerBrowser::SetWindowTitle(QString title)
 {
     this->setWindowTitle(title);
@@ -54,11 +69,11 @@ InnerBrowser::InnerBrowser()
     this->setWindowOpacity(config.transparent);
 
 
-    this->setWindowTitle(SH::str2qstr(config.windowtitle));
+    this->setWindowTitle(config.windowtitle);
     
     layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    webview = new WebView();
+    webview = new WebView(config.css);
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 0));
     this->webview->titleChanged(this->windowTitle());
     this->layout->addWidget(this->webview);
@@ -69,7 +84,7 @@ InnerBrowser::InnerBrowser()
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
     
-    this->webview->load(QUrl(QString::fromStdString(config.room_url)));
+    this->webview->load(QUrl(config.room_url));
     this->ScaleWindowPage(config.scale);
     this->show();
 

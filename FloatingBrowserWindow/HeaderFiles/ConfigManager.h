@@ -13,20 +13,23 @@ namespace BrowserConfig
     struct Config
     {
         double transparent = 50.0f;
-        std::string css_file;
+        QString css;
         int x{};
         int y{};
         int width = 800;
         int height = 600;
         double scale = 100;
         bool is_transparent = true;
-        std::string room_url = "http://localhost:12450/room/test?minGiftPrice=7&showDanmaku=true&showGift=true&showGiftName=false&mergeSimilarDanmaku=false&mergeGift=true&maxNumber=60&blockGiftDanmaku=true&blockLevel=0&blockNewbie=false&blockNotMobileVerified=false&blockKeywords=&blockUsers=&blockMedalLevel=0&relayMessagesByServer=false&autoTranslate=false&giftUsernamePronunciation=&emoticons=%5B%5D&lang=zh";
-        string windowtitle = "新窗口";
+        QString room_url = "http://localhost:12450/room/test?minGiftPrice=7&showDanmaku=true&showGift=true&showGiftName=false&mergeSimilarDanmaku=false&mergeGift=true&maxNumber=60&blockGiftDanmaku=true&blockLevel=0&blockNewbie=false&blockNotMobileVerified=false&blockKeywords=&blockUsers=&blockMedalLevel=0&relayMessagesByServer=false&autoTranslate=false&giftUsernamePronunciation=&emoticons=%5B%5D&lang=zh";
+        QString windowtitle = QStringLiteral("新窗口");
     };
 
     void to_json(json& j, const Config& config);
 
     void from_json(const json& j, Config& config);
+
+
+
 };
 
 enum CM_LoadConfigCondition
