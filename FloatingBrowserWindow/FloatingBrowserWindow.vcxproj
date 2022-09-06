@@ -59,6 +59,11 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
   </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtUic>
+      <QtUicDir>.\HeaderFiles\PopDialogs\uic</QtUicDir>
+    </QtUic>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ClCompile>
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
@@ -86,6 +91,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="SourceFiles\PopDialogs\ControlPanel.cpp" />
     <ClCompile Include="SourceFiles\PopDialogs\StringInputDialog.cpp" />
     <ClCompile Include="SourceFiles\Tray.cpp" />
     <ClCompile Include="SourceFiles\ConfigManager.cpp" />
@@ -93,19 +99,25 @@
     <ClCompile Include="SourceFiles\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_ControlPanel.h" />
+    <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_StringInputDialog.h" />
     <QtMoc Include="HeaderFiles\InnerBrowser.h" />
     <ClInclude Include="HeaderFiles\json.hpp" />
     <ClInclude Include="HeaderFiles\ConfigManager.h" />
+    <QtMoc Include="HeaderFiles\PopDialogs\ControlPanel.h" />
     <ClInclude Include="HeaderFiles\StringHelper.h" />
     <QtMoc Include="HeaderFiles\PopDialogs\StringInputDialog.h" />
     <QtMoc Include="HeaderFiles\Tray.h" />
-    <ClInclude Include="x64\Debug\uic\ui_StringInputDialog.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\heart.png" />
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="HeaderFiles\PopDialogs\StringInputDialog.ui" />
+    <QtUic Include="HeaderFiles\PopDialogs\resources\ControlPanel.ui" />
+    <QtUic Include="HeaderFiles\PopDialogs\resources\StringInputDialog.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

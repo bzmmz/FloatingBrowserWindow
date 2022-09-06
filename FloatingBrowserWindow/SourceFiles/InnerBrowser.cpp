@@ -12,6 +12,11 @@ void InnerBrowser::InitSystemTray()
     tray = new Tray(this);
 }
 
+void InnerBrowser::ReloadCSS(QString css)
+{
+    this->webview->ReloadCss(css);
+}
+
 void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     //左键单击，显示窗口
@@ -38,9 +43,28 @@ WebView::WebView(QString css)
     InjectCss(this->css);
 }
 
+void WebView::ReloadCss(QString css)
+{
+    this->css = css;
+    java_script = CombineScript(css);
+    this->page()->runJavaScript(java_script);
+}
+
+QString WebView::GetCss()
+{
+    return css;
+}
+
+QString WebView::CombineScript(QString css)
+{
+    auto _css = css.replace("\n","\\n");
+    auto s = JS_LOAD_CSS_FROM_STR + _css + "\\n`));document.head.append(style_node);})();'";
+    return s;
+}
+
 void WebView::InjectCss(QString css)
 {
-    java_script = JS_LOAD_CSS_FROM_STR + css;
+    java_script = CombineScript(css);
     script_engine = new QWebEngineScript();
     script_engine->setInjectionPoint(QWebEngineScript::DocumentReady);
     script_engine->setSourceCode(java_script);
@@ -51,6 +75,17 @@ void InnerBrowser::SetWindowTitle(QString title)
 {
     this->setWindowTitle(title);
     this->webview->titleChanged(title);
+}
+
+void InnerBrowser::SetCutomCSS(QString css)
+{
+    this->webview->ReloadCss(css);
+}
+
+void InnerBrowser::SetTransparent(int transparent)
+{
+    double t = transparent / 100.0f;
+    this->setWindowOpacity(t);
 }
 
 InnerBrowser::InnerBrowser()
@@ -84,9 +119,10 @@ InnerBrowser::InnerBrowser()
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
     
-    this->webview->load(QUrl(config.room_url));
+    
     this->ScaleWindowPage(config.scale);
     this->show();
+    this->webview->load(QUrl(config.room_url));
 
 }
 
@@ -118,6 +154,11 @@ void InnerBrowser::ResizeWindows(float width, float height)
 void InnerBrowser::ScaleWindowPage(float scale)
 {
     this->webview->page()->setZoomFactor(scale);
+}
+
+QString InnerBrowser::GetCss()
+{
+    return webview->GetCss();
 }
 
 CM_LoadConfigCondition InnerBrowser::GetLoadCondition()

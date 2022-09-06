@@ -7,17 +7,16 @@
 #include "ConfigManager.h"
 #include "Tray.h"
 
-
-
 class WebView : public QWebEngineView
 {
 public:
     WebView(QString css);
-
-
+    void ReloadCss(QString css);
+    QString GetCss();
 
 private:
-
+    //拼接脚本
+    QString CombineScript(QString css);
     //用java_script脚本注入css
     void InjectCss(QString css);
     QString css;
@@ -25,24 +24,7 @@ private:
     QWebEngineScript *script_engine;
 
 
-    QString JS_LOAD_CSS_FROM_STR = "\
-        (function(){\
-        let style_node = document.createElement('style');\
-        style_node.append(document.createTextNode(`\n%s\n`));\
-        document.head.append(style_node);\
-        console.log('Additional inline style sheet:\\n', style_node);\
-        })();\
-    ";
-
-    QString JS_LOAD_CSS_FROM_URL = "\
-        (function(){\
-        let link = document.createElement('link');\
-        link.href = '%s';\
-        link.rel = 'stylesheet';\
-        document.head.append(link);\
-        console.log('Additional link to style sheet:\\n', link);\
-        })();\
-    ";
+    const QString JS_LOAD_CSS_FROM_STR = "'(function(){\\nlet style_node = document.createElement(\\'style\\');\\nstyle_node.append(document.createTextNode(`\\n";
 };
 
 
@@ -57,6 +39,8 @@ class InnerBrowser : public QWidget
     Q_OBJECT
 public slots:
     void SetWindowTitle(QString title);
+    void SetCutomCSS(QString css);
+    void SetTransparent(int transparent);
 signals:
     void MainWindowCloseSignal();
 public:
@@ -67,6 +51,7 @@ public:
     void MoveWindow(float x, float y);
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
+    QString GetCss();
     CM_LoadConfigCondition GetLoadCondition();
 private:
     ConfigManager manager;
@@ -75,6 +60,7 @@ private:
     Tray* tray;
     void load_config();
     void InitSystemTray();
+    void ReloadCSS(QString css);
 private slots:
     //点击托盘时的响应函数
     void IconClicked(QSystemTrayIcon::ActivationReason reason);

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include "ui_StringInputDialog.h"
 #include "Tray.h"
+#include "InnerBrowser.h"
 class Tray;
 class InnerBrowser;
 /*
@@ -9,6 +10,7 @@ class InnerBrowser;
 class StringInputDialog : public QMainWindow
 {
     Q_OBJECT
+
 public:
     StringInputDialog(InnerBrowser* parent);
 signals:

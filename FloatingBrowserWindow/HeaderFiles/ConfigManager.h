@@ -6,8 +6,7 @@
 #include <QtWidgets/QtWidgets>
 using namespace std;
 using namespace nlohmann;
-
-
+class InnerBrowser;
 namespace BrowserConfig
 {
     struct Config
@@ -31,7 +30,6 @@ namespace BrowserConfig
 
 
 };
-
 enum CM_LoadConfigCondition
 {
     CM_NO_CONFIG_FILE,
@@ -55,7 +53,7 @@ public:
     ConfigManager();
     void LoadConfig();
     void SaveConfig();
-    void SaveCurrentConfig(QWidget* window);
+    void SaveCurrentConfig(InnerBrowser* window);
     BrowserConfig::Config GetConfig();
     CM_LoadConfigCondition GetLoadConfigCondition();
 };

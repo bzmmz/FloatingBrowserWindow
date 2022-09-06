@@ -38,6 +38,9 @@
     <ClCompile Include="SourceFiles\PopDialogs\StringInputDialog.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SourceFiles\PopDialogs\ControlPanel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFiles\json.hpp">
@@ -49,7 +52,10 @@
     <ClInclude Include="HeaderFiles\StringHelper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="x64\Debug\uic\ui_StringInputDialog.h">
+    <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_ControlPanel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_StringInputDialog.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -59,7 +65,10 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <QtUic Include="HeaderFiles\PopDialogs\StringInputDialog.ui">
+    <QtUic Include="HeaderFiles\PopDialogs\resources\ControlPanel.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="HeaderFiles\PopDialogs\resources\StringInputDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>
@@ -73,5 +82,11 @@
     <QtMoc Include="HeaderFiles\InnerBrowser.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="HeaderFiles\PopDialogs\ControlPanel.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.json" />
   </ItemGroup>
 </Project>

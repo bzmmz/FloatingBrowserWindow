@@ -1,9 +1,2 @@
-﻿  ConfigManager.cpp
-  InnerBrowser.cpp
-  StringInputDialog.cpp
-  Tray.cpp
-  main.cpp
-  moc_InnerBrowser.cpp
-  moc_StringInputDialog.cpp
-  moc_Tray.cpp
+﻿  InnerBrowser.cpp
   FloatingBrowserWindow.vcxproj -> E:\Gitee\FloatingBrowserWindow\x64\Debug\FloatingBrowserWindow.exe

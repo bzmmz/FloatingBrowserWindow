@@ -1,6 +1,7 @@
 ﻿#include "ConfigManager.h"
 #include <iostream>
 #include <QString>
+#include "InnerBrowser.h"
 #include "StringHelper.h"
 void BrowserConfig::to_json(json& j, const Config& config)
 {
@@ -94,7 +95,7 @@ void ConfigManager::SaveConfig()
     write->close();
 }
 
-void ConfigManager::SaveCurrentConfig(QWidget* window)
+void ConfigManager::SaveCurrentConfig(InnerBrowser* window)
 {
     config.x = window->x();
     config.y = window->y();
@@ -102,6 +103,7 @@ void ConfigManager::SaveCurrentConfig(QWidget* window)
     config.height = window->height();
     config.transparent = window->windowOpacity();
     config.windowtitle = window->windowTitle();
+    config.css = window->GetCss();
 
     SaveConfig();
     

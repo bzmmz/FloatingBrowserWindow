@@ -32,7 +32,7 @@
 <QMake_QMAKE_VERSION_>3.1</QMake_QMAKE_VERSION_>
 <QMake_QT_VERSION_>5.15.2</QMake_QT_VERSION_>
 <Qt_INCLUDEPATH_
-      >$(Qt_INCLUDEPATH_);</Qt_INCLUDEPATH_>
+      >$(Qt_INCLUDEPATH_);x64\Debug\moc;.\HeaderFiles\PopDialogs\uic</Qt_INCLUDEPATH_>
     <QtBkup_QtInstall
       >Qt5_msvc2019</QtBkup_QtInstall>
     <QtBkup_QtModules

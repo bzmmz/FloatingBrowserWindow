@@ -3,7 +3,7 @@
 #include <QtWidgets/QtWidgets>
 #include "InnerBrowser.h"
 #include "StringInputDialog.h"
-class InnerBrowser;
+#include "ControlPanel.h"
 /*
  * 系统托盘的实现
  */
@@ -19,7 +19,7 @@ public:
     
 public slots:
     void PopModifyTitleWindow();
-    
+    void PopControlPanel();
     
 private:
     void Init();
@@ -30,4 +30,5 @@ private:
     QMenu *menu;
     QAction* quit;
     QAction* set_title;
+    QAction* control_panel;
 };

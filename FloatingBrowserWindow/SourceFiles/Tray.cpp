@@ -20,17 +20,20 @@ void Tray::InitMenu()
 {
     menu = new QMenu(window);
 
+    //更改窗口标题
     set_title = new QAction(menu);
     set_title->setText(QStringLiteral("更改窗口标题"));
     connect(set_title, &QAction::triggered, this, &Tray::PopModifyTitleWindow);
     menu->addAction(set_title);
 
+    //控制面板
+    control_panel = new QAction(menu);
+    control_panel->setText(QStringLiteral("控制面板"));
+    connect(control_panel, &QAction::triggered, this, &Tray::PopControlPanel);
+    menu->addAction(control_panel);
 
 
-
-
-
-
+    //退出
     quit = new QAction(menu);
     quit->setText(QStringLiteral("退出"));
     connect(quit, &QAction::triggered, [this](bool) {window->close(); });
@@ -100,5 +103,12 @@ void Tray::PopModifyTitleWindow()
 
     dialog->setWindowModality(Qt::ApplicationModal);
     dialog->show();
+}
+
+void Tray::PopControlPanel()
+{
+    auto control_panel = new ControlPanel(window);
+    control_panel->setWindowModality(Qt::ApplicationModal);
+    control_panel->show();
 }
 
