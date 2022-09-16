@@ -54,6 +54,7 @@ public:
     void LoadConfig();
     void SaveConfig();
     void SaveCurrentConfig(InnerBrowser* window);
+    void SetTransparent(double transparent);
     BrowserConfig::Config GetConfig();
     CM_LoadConfigCondition GetLoadConfigCondition();
 };

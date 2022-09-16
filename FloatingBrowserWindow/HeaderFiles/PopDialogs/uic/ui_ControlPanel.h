@@ -14,6 +14,7 @@
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPlainTextEdit>
@@ -53,7 +54,7 @@ public:
     QHBoxLayout *transparent;
     QLabel *label;
     QSlider *transparentEdit;
-    QTextEdit *transparentNum;
+    QLineEdit *transparentNum;
     QSpacerItem *horizontalSpacer;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -62,7 +63,7 @@ public:
     {
         if (ControlPanel->objectName().isEmpty())
             ControlPanel->setObjectName(QString::fromUtf8("ControlPanel"));
-        ControlPanel->resize(1009, 1066);
+        ControlPanel->resize(1008, 880);
         ControlPanel->setMinimumSize(QSize(800, 600));
         ControlPanel->setMaximumSize(QSize(1920, 1080));
         ControlPanel->setStyleSheet(QString::fromUtf8("/*\n"
@@ -703,6 +704,7 @@ public:
 
         titleEditConfirm = new QPushButton(centralwidget);
         titleEditConfirm->setObjectName(QString::fromUtf8("titleEditConfirm"));
+        titleEditConfirm->setMinimumSize(QSize(80, 40));
         titleEditConfirm->setMaximumSize(QSize(16777215, 40));
         titleEditConfirm->setFont(font);
         titleEditConfirm->setCursor(QCursor(Qt::PointingHandCursor));
@@ -716,7 +718,7 @@ public:
 
         verticalLayout->addLayout(WindowTitle);
 
-        verticalSpacer = new QSpacerItem(20, 200, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        verticalSpacer = new QSpacerItem(20, 100, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         verticalLayout->addItem(verticalSpacer);
 
@@ -737,7 +739,7 @@ public:
 
         cssEdit = new QPlainTextEdit(centralwidget);
         cssEdit->setObjectName(QString::fromUtf8("cssEdit"));
-        cssEdit->setMinimumSize(QSize(200, 20));
+        cssEdit->setMinimumSize(QSize(250, 20));
         QFont font3;
         font3.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
         font3.setPointSize(12);
@@ -748,7 +750,7 @@ public:
         css_buttons = new QVBoxLayout();
         css_buttons->setObjectName(QString::fromUtf8("css_buttons"));
         css_buttons->setContentsMargins(10, 10, 10, 10);
-        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        verticalSpacer_4 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         css_buttons->addItem(verticalSpacer_4);
 
@@ -761,7 +763,7 @@ public:
 
         css_buttons->addWidget(cssEditConfirm);
 
-        verticalSpacer_3 = new QSpacerItem(20, 200, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        verticalSpacer_3 = new QSpacerItem(20, 200, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         css_buttons->addItem(verticalSpacer_3);
 
@@ -771,7 +773,7 @@ public:
 
         css_buttons->addWidget(clearcss);
 
-        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        verticalSpacer_5 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Maximum);
 
         css_buttons->addItem(verticalSpacer_5);
 
@@ -798,16 +800,23 @@ public:
         transparentEdit = new QSlider(centralwidget);
         transparentEdit->setObjectName(QString::fromUtf8("transparentEdit"));
         transparentEdit->setMaximumSize(QSize(300, 30));
+        QFont font4;
+        font4.setFamily(QString::fromUtf8("..\351\273\221\344\275\223UI-\346\227\245\346\234\254\350\257\255"));
+        font4.setPointSize(11);
+        transparentEdit->setFont(font4);
         transparentEdit->setMaximum(100);
         transparentEdit->setValue(100);
         transparentEdit->setOrientation(Qt::Horizontal);
 
         transparent->addWidget(transparentEdit);
 
-        transparentNum = new QTextEdit(centralwidget);
+        transparentNum = new QLineEdit(centralwidget);
         transparentNum->setObjectName(QString::fromUtf8("transparentNum"));
-        transparentNum->setMaximumSize(QSize(100, 40));
-        transparentNum->setFont(font3);
+        transparentNum->setMaximumSize(QSize(50, 40));
+        QFont font5;
+        font5.setFamily(QString::fromUtf8("..\351\273\221\344\275\223UI-\346\227\245\346\234\254\350\257\255"));
+        font5.setPointSize(16);
+        transparentNum->setFont(font5);
 
         transparent->addWidget(transparentNum);
 
@@ -824,7 +833,7 @@ public:
         ControlPanel->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ControlPanel);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1009, 23));
+        menubar->setGeometry(QRect(0, 0, 1008, 20));
         ControlPanel->setMenuBar(menubar);
         statusbar = new QStatusBar(ControlPanel);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));

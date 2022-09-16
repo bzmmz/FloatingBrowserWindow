@@ -109,6 +109,11 @@ void ConfigManager::SaveCurrentConfig(InnerBrowser* window)
     
 }
 
+void ConfigManager::SetTransparent(double transparent)
+{
+    config.transparent = transparent;
+}
+
 BrowserConfig::Config ConfigManager::GetConfig()
 {
     return config;

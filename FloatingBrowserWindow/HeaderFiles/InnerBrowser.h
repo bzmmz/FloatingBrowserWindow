@@ -54,6 +54,7 @@ public:
     void MoveWindow(float x, float y);
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
+    int GetTransparent();
     QString GetCss();
     CM_LoadConfigCondition GetLoadCondition();
 private:

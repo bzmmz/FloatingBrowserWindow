@@ -52,7 +52,7 @@ void WebView::ReloadCss(QString css)
 {
     this->css = css;
     java_script = CombineScript(css);
-    this->page()->runJavaScript(java_script);
+    this->page()->runJavaScript(java_script, QWebEngineScript::ApplicationWorld);
 }
 
 QString WebView::GetCss()
@@ -62,9 +62,6 @@ QString WebView::GetCss()
 
 QString WebView::CombineScript(QString css)
 {
-    /*auto _css = css.replace("\n","\\n");
-    auto s = JS_LOAD_CSS_FROM_STR + _css + "\\n`));document.head.append(style_node);})();'";
-    return s;*/
     QString s = QString::fromLatin1("(function() {"\
                                     "    css = document.createElement('style');"\
                                     "    css.type = 'text/css';"\
@@ -79,6 +76,7 @@ void WebView::InjectCss(QString css)
 {
     java_script = CombineScript(css);
     script_engine = new QWebEngineScript();
+    script_engine->setName("css");
     script_engine->setInjectionPoint(QWebEngineScript::DocumentReady);
     script_engine->setSourceCode(java_script);
     script_engine->setRunsOnSubFrames(true);
@@ -88,13 +86,17 @@ void WebView::InjectCss(QString css)
 
 void WebView::RemoveCss()
 {
-    QString s = QString::fromLatin1("(function() {"\
+    java_script = QString::fromLatin1("(function() {"\
         "    var element = document.getElementById('css');"\
         "    element.outerHTML = '';"\
         "    delete element;"\
         "})()");
     this->css = "";
-    this->page()->runJavaScript(s);
+    //todo,bug.无css样式第一次添加之后立即清除没用,得跑两次,很迷惑.如果是从config里面加载来的就没问题
+    this->page()->runJavaScript(java_script, QWebEngineScript::ApplicationWorld);
+    this->page()->runJavaScript(java_script, QWebEngineScript::ApplicationWorld);
+    auto script = this->page()->scripts().findScript("css");
+    this->page()->scripts().remove(script);
 }
 
 void InnerBrowser::SetWindowTitle(QString title)
@@ -111,6 +113,7 @@ void InnerBrowser::SetCutomCSS(QString css)
 void InnerBrowser::SetTransparent(int transparent)
 {
     double t = transparent / 100.0f;
+    manager.SetTransparent(t);
     this->setWindowOpacity(t);
 }
 
@@ -186,6 +189,12 @@ void InnerBrowser::ResizeWindows(float width, float height)
 void InnerBrowser::ScaleWindowPage(float scale)
 {
     this->webview->page()->setZoomFactor(scale);
+}
+
+int InnerBrowser::GetTransparent()
+{
+    auto config = manager.GetConfig();
+    return static_cast<int>(config.transparent * 100);
 }
 
 QString InnerBrowser::GetCss()

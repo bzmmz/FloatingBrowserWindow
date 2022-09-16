@@ -26,6 +26,8 @@ private slots:
     void EditTitleConfirmClicked();
     void EditCssConfirmClicked();
     void ClearCssClicked();
+    void TransparentSliderChanged();
+    void TransparentNumChanged();
     //收到主窗口关闭的信号关闭窗口
     void ReceiveMainWindowCloseSignal();
 };
