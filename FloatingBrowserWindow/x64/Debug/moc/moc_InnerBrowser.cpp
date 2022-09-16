@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_InnerBrowser_t {
-    QByteArrayData data[12];
-    char stringdata0[153];
+    QByteArrayData data[13];
+    char stringdata0[162];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -41,15 +41,16 @@ QT_MOC_LITERAL(5, 57, 11), // "SetCutomCSS"
 QT_MOC_LITERAL(6, 69, 3), // "css"
 QT_MOC_LITERAL(7, 73, 14), // "SetTransparent"
 QT_MOC_LITERAL(8, 88, 11), // "transparent"
-QT_MOC_LITERAL(9, 100, 11), // "IconClicked"
-QT_MOC_LITERAL(10, 112, 33), // "QSystemTrayIcon::ActivationRe..."
-QT_MOC_LITERAL(11, 146, 6) // "reason"
+QT_MOC_LITERAL(9, 100, 8), // "ClearCss"
+QT_MOC_LITERAL(10, 109, 11), // "IconClicked"
+QT_MOC_LITERAL(11, 121, 33), // "QSystemTrayIcon::ActivationRe..."
+QT_MOC_LITERAL(12, 155, 6) // "reason"
 
     },
     "InnerBrowser\0MainWindowCloseSignal\0\0"
     "SetWindowTitle\0title\0SetCutomCSS\0css\0"
-    "SetTransparent\0transparent\0IconClicked\0"
-    "QSystemTrayIcon::ActivationReason\0"
+    "SetTransparent\0transparent\0ClearCss\0"
+    "IconClicked\0QSystemTrayIcon::ActivationReason\0"
     "reason"
 };
 #undef QT_MOC_LITERAL
@@ -60,7 +61,7 @@ static const uint qt_meta_data_InnerBrowser[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-       5,   14, // methods
+       6,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -68,13 +69,14 @@ static const uint qt_meta_data_InnerBrowser[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   39,    2, 0x06 /* Public */,
+       1,    0,   44,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    1,   40,    2, 0x0a /* Public */,
-       5,    1,   43,    2, 0x0a /* Public */,
-       7,    1,   46,    2, 0x0a /* Public */,
-       9,    1,   49,    2, 0x08 /* Private */,
+       3,    1,   45,    2, 0x0a /* Public */,
+       5,    1,   48,    2, 0x0a /* Public */,
+       7,    1,   51,    2, 0x0a /* Public */,
+       9,    0,   54,    2, 0x0a /* Public */,
+      10,    1,   55,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
@@ -83,7 +85,8 @@ static const uint qt_meta_data_InnerBrowser[] = {
     QMetaType::Void, QMetaType::QString,    4,
     QMetaType::Void, QMetaType::QString,    6,
     QMetaType::Void, QMetaType::Int,    8,
-    QMetaType::Void, 0x80000000 | 10,   11,
+    QMetaType::Void,
+    QMetaType::Void, 0x80000000 | 11,   12,
 
        0        // eod
 };
@@ -98,7 +101,8 @@ void InnerBrowser::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id
         case 1: _t->SetWindowTitle((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 2: _t->SetCutomCSS((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 3: _t->SetTransparent((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 4: _t->IconClicked((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
+        case 4: _t->ClearCss(); break;
+        case 5: _t->IconClicked((*reinterpret_cast< QSystemTrayIcon::ActivationReason(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -142,13 +146,13 @@ int InnerBrowser::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 5)
+        if (_id < 6)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 5;
+        _id -= 6;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 5)
+        if (_id < 6)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 5;
+        _id -= 6;
     }
     return _id;
 }

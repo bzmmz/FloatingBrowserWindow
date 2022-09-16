@@ -15,6 +15,11 @@ ControlPanel::ControlPanel(InnerBrowser* parent)
     connect(ui.cssEditConfirm, &QAbstractButton::clicked, this, &ControlPanel::EditCssConfirmClicked);
     connect(this, &ControlPanel::ModifyCSSSignal, parent, &InnerBrowser::SetCutomCSS);
 
+    //CSS清除
+    connect(ui.clearcss, &QAbstractButton::clicked, this, &ControlPanel::ClearCssClicked);
+    connect(this, &ControlPanel::ClearCssSignal, parent, &InnerBrowser::ClearCss);
+
+
     //透明度修改
     //todo
 
@@ -32,6 +37,12 @@ void ControlPanel::EditTitleConfirmClicked()
 void ControlPanel::EditCssConfirmClicked()
 {
     emit ModifyCSSSignal(ui.cssEdit->toPlainText());
+}
+
+void ControlPanel::ClearCssClicked()
+{
+    ui.cssEdit->clear();
+    emit ClearCssSignal();
 }
 
 void ControlPanel::ReceiveMainWindowCloseSignal()

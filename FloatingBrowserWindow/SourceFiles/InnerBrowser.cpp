@@ -17,6 +17,11 @@ void InnerBrowser::ReloadCSS(QString css)
     this->webview->ReloadCss(css);
 }
 
+void InnerBrowser::ClearCss()
+{
+    this->webview->RemoveCss();
+}
+
 void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     //左键单击，显示窗口
@@ -63,7 +68,7 @@ QString WebView::CombineScript(QString css)
     QString s = QString::fromLatin1("(function() {"\
                                     "    css = document.createElement('style');"\
                                     "    css.type = 'text/css';"\
-                                    "    css.id = 'blivechat';"\
+                                    "    css.id = 'css';"\
                                     "    document.head.appendChild(css);"\
                                     "    css.innerText = '%1';"\
                                     "})()").arg(css.simplified());
@@ -79,6 +84,17 @@ void WebView::InjectCss(QString css)
     script_engine->setRunsOnSubFrames(true);
     script_engine->setWorldId(QWebEngineScript::ApplicationWorld);
     this->page()->scripts().insert(*script_engine);
+}
+
+void WebView::RemoveCss()
+{
+    QString s = QString::fromLatin1("(function() {"\
+        "    var element = document.getElementById('css');"\
+        "    element.outerHTML = '';"\
+        "    delete element;"\
+        "})()");
+    this->css = "";
+    this->page()->runJavaScript(s);
 }
 
 void InnerBrowser::SetWindowTitle(QString title)
@@ -132,12 +148,12 @@ InnerBrowser::InnerBrowser()
     
     this->ScaleWindowPage(config.scale);
     //去掉窗口阴影达到纯透明效果
-    this->setAttribute(Qt::WA_TranslucentBackground);
-    setWindowFlags(Qt::Tool); //Qt::FramelessWindowHint | 
-    //鼠标穿透
-    this->setAttribute(Qt::WA_TransparentForMouseEvents,true);
+    //this->setAttribute(Qt::WA_TranslucentBackground);
+    //setWindowFlags(Qt::Tool); //Qt::FramelessWindowHint | 
+    ////鼠标穿透
+    //this->setAttribute(Qt::WA_TransparentForMouseEvents,true);
 
-    this->show();
+    this->show(); 
     
 
 }

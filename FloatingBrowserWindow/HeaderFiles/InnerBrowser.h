@@ -12,6 +12,7 @@ class WebView : public QWebEngineView
 public:
     WebView(QString css);
     void ReloadCss(QString css);
+    void RemoveCss();
     QString GetCss();
 
 private:
@@ -19,6 +20,7 @@ private:
     QString CombineScript(QString css);
     //用java_script脚本注入css
     void InjectCss(QString css);
+    
     QString css;
     QString java_script;
     QWebEngineScript *script_engine;
@@ -41,6 +43,7 @@ public slots:
     void SetWindowTitle(QString title);
     void SetCutomCSS(QString css);
     void SetTransparent(int transparent);
+    void ClearCss();
 signals:
     void MainWindowCloseSignal();
 public:
@@ -61,6 +64,7 @@ private:
     void load_config();
     void InitSystemTray();
     void ReloadCSS(QString css);
+    
 private slots:
     //点击托盘时的响应函数
     void IconClicked(QSystemTrayIcon::ActivationReason reason);

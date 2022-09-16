@@ -89,5 +89,6 @@
   <ItemGroup>
     <None Include="config.json" />
     <None Include="style.css" />
+    <None Include="style.qss" />
   </ItemGroup>
 </Project>

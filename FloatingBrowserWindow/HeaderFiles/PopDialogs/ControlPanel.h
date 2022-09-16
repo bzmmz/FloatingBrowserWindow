@@ -14,6 +14,7 @@ public:
 signals:
     void ModifyTitleSignal(QString title);
     void ModifyCSSSignal(QString css);
+    void ClearCssSignal();
     void ModifyTransparentSignal(int transparent);
 
 
@@ -24,7 +25,7 @@ private:
 private slots:
     void EditTitleConfirmClicked();
     void EditCssConfirmClicked();
-
+    void ClearCssClicked();
     //收到主窗口关闭的信号关闭窗口
     void ReceiveMainWindowCloseSignal();
 };

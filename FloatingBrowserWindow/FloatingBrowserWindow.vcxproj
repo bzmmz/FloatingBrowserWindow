@@ -119,6 +119,7 @@
   <ItemGroup>
     <None Include="config.json" />
     <None Include="style.css" />
+    <None Include="style.qss" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
