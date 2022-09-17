@@ -111,6 +111,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="Resources\heart.png" />
+    <Image Include="Resources\ruby.jpg" />
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="HeaderFiles\PopDialogs\resources\ControlPanel.ui" />
@@ -120,6 +121,9 @@
     <None Include="config.json" />
     <None Include="style.css" />
     <None Include="style.qss" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resources\Resource.qrc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

@@ -29,6 +29,5 @@ private:
     QSystemTrayIcon *trayicon;  //托盘核心
     QMenu *menu;
     QAction* quit;
-    QAction* set_title;
     QAction* control_panel;
 };

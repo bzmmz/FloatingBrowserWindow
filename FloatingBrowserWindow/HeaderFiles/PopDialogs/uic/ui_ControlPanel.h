@@ -10,6 +10,7 @@
 #define UI_CONTROLPANEL_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -34,6 +35,10 @@ public:
     QWidget *centralwidget;
     QGridLayout *gridLayout;
     QVBoxLayout *verticalLayout;
+    QHBoxLayout *URL;
+    QLabel *label123;
+    QLineEdit *urlEditor;
+    QPushButton *editUrl;
     QHBoxLayout *WindowTitle;
     QLabel *label_3;
     QTextEdit *titleEdit;
@@ -66,6 +71,9 @@ public:
         ControlPanel->resize(1008, 880);
         ControlPanel->setMinimumSize(QSize(800, 600));
         ControlPanel->setMaximumSize(QSize(1920, 1080));
+        QIcon icon;
+        icon.addFile(QString::fromUtf8(":/new/prefix1/\345\256\235\347\237\263\345\205\275.jpg"), QSize(), QIcon::Normal, QIcon::Off);
+        ControlPanel->setWindowIcon(icon);
         ControlPanel->setStyleSheet(QString::fromUtf8("/*\n"
 "Aqua Style Sheet for QT Applications\n"
 "Author: Jaime A. Quiroga P.\n"
@@ -662,6 +670,47 @@ public:
         verticalLayout = new QVBoxLayout();
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(10, 10, 10, 10);
+        URL = new QHBoxLayout();
+        URL->setSpacing(10);
+        URL->setObjectName(QString::fromUtf8("URL"));
+        URL->setContentsMargins(10, 10, 10, 10);
+        label123 = new QLabel(centralwidget);
+        label123->setObjectName(QString::fromUtf8("label123"));
+        label123->setMaximumSize(QSize(200, 40));
+        QFont font;
+        font.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
+        font.setPointSize(16);
+        font.setBold(true);
+        font.setWeight(75);
+        label123->setFont(font);
+
+        URL->addWidget(label123);
+
+        urlEditor = new QLineEdit(centralwidget);
+        urlEditor->setObjectName(QString::fromUtf8("urlEditor"));
+        urlEditor->setMinimumSize(QSize(0, 50));
+        QFont font1;
+        font1.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
+        font1.setPointSize(16);
+        urlEditor->setFont(font1);
+        urlEditor->setAutoFillBackground(false);
+
+        URL->addWidget(urlEditor);
+
+        editUrl = new QPushButton(centralwidget);
+        editUrl->setObjectName(QString::fromUtf8("editUrl"));
+        editUrl->setMinimumSize(QSize(80, 40));
+        editUrl->setMaximumSize(QSize(16777215, 40));
+        editUrl->setFont(font1);
+
+        URL->addWidget(editUrl);
+
+        URL->setStretch(0, 10);
+        URL->setStretch(1, 50);
+        URL->setStretch(2, 1);
+
+        verticalLayout->addLayout(URL);
+
         WindowTitle = new QHBoxLayout();
         WindowTitle->setObjectName(QString::fromUtf8("WindowTitle"));
         WindowTitle->setSizeConstraint(QLayout::SetMinimumSize);
@@ -675,10 +724,7 @@ public:
         sizePolicy.setHeightForWidth(label_3->sizePolicy().hasHeightForWidth());
         label_3->setSizePolicy(sizePolicy);
         label_3->setMaximumSize(QSize(200, 40));
-        QFont font;
-        font.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
-        font.setPointSize(16);
-        label_3->setFont(font);
+        label_3->setFont(font1);
         label_3->setAlignment(Qt::AlignCenter);
 
         WindowTitle->addWidget(label_3);
@@ -687,12 +733,7 @@ public:
         titleEdit->setObjectName(QString::fromUtf8("titleEdit"));
         titleEdit->setEnabled(true);
         titleEdit->setMaximumSize(QSize(400, 50));
-        QFont font1;
-        font1.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
-        font1.setPointSize(16);
-        font1.setBold(true);
-        font1.setWeight(75);
-        titleEdit->setFont(font1);
+        titleEdit->setFont(font);
         titleEdit->viewport()->setProperty("cursor", QVariant(QCursor(Qt::IBeamCursor)));
         titleEdit->setLayoutDirection(Qt::LeftToRight);
 
@@ -706,7 +747,7 @@ public:
         titleEditConfirm->setObjectName(QString::fromUtf8("titleEditConfirm"));
         titleEditConfirm->setMinimumSize(QSize(80, 40));
         titleEditConfirm->setMaximumSize(QSize(16777215, 40));
-        titleEditConfirm->setFont(font);
+        titleEditConfirm->setFont(font1);
         titleEditConfirm->setCursor(QCursor(Qt::PointingHandCursor));
 
         WindowTitle->addWidget(titleEditConfirm);
@@ -734,12 +775,14 @@ public:
         font2.setBold(false);
         font2.setWeight(50);
         label_2->setFont(font2);
+        label_2->setAlignment(Qt::AlignCenter);
 
         CSS->addWidget(label_2);
 
         cssEdit = new QPlainTextEdit(centralwidget);
         cssEdit->setObjectName(QString::fromUtf8("cssEdit"));
         cssEdit->setMinimumSize(QSize(250, 20));
+        cssEdit->setMaximumSize(QSize(16777215, 400));
         QFont font3;
         font3.setFamily(QString::fromUtf8("\346\200\235\346\272\220\345\256\213\344\275\223"));
         font3.setPointSize(12);
@@ -757,7 +800,7 @@ public:
         cssEditConfirm = new QPushButton(centralwidget);
         cssEditConfirm->setObjectName(QString::fromUtf8("cssEditConfirm"));
         cssEditConfirm->setMaximumSize(QSize(16777215, 40));
-        cssEditConfirm->setFont(font);
+        cssEditConfirm->setFont(font1);
         cssEditConfirm->setCursor(QCursor(Qt::PointingHandCursor));
         cssEditConfirm->setStyleSheet(QString::fromUtf8(""));
 
@@ -769,7 +812,7 @@ public:
 
         clearcss = new QPushButton(centralwidget);
         clearcss->setObjectName(QString::fromUtf8("clearcss"));
-        clearcss->setFont(font);
+        clearcss->setFont(font1);
 
         css_buttons->addWidget(clearcss);
 
@@ -792,7 +835,7 @@ public:
         label = new QLabel(centralwidget);
         label->setObjectName(QString::fromUtf8("label"));
         label->setMinimumSize(QSize(100, 0));
-        label->setFont(font);
+        label->setFont(font1);
         label->setAlignment(Qt::AlignCenter);
 
         transparent->addWidget(label);
@@ -807,6 +850,8 @@ public:
         transparentEdit->setMaximum(100);
         transparentEdit->setValue(100);
         transparentEdit->setOrientation(Qt::Horizontal);
+        transparentEdit->setInvertedAppearance(false);
+        transparentEdit->setInvertedControls(false);
 
         transparent->addWidget(transparentEdit);
 
@@ -833,7 +878,7 @@ public:
         ControlPanel->setCentralWidget(centralwidget);
         menubar = new QMenuBar(ControlPanel);
         menubar->setObjectName(QString::fromUtf8("menubar"));
-        menubar->setGeometry(QRect(0, 0, 1008, 20));
+        menubar->setGeometry(QRect(0, 0, 1008, 23));
         ControlPanel->setMenuBar(menubar);
         statusbar = new QStatusBar(ControlPanel);
         statusbar->setObjectName(QString::fromUtf8("statusbar"));
@@ -846,7 +891,10 @@ public:
 
     void retranslateUi(QMainWindow *ControlPanel)
     {
-        ControlPanel->setWindowTitle(QCoreApplication::translate("ControlPanel", "MainWindow", nullptr));
+        ControlPanel->setWindowTitle(QCoreApplication::translate("ControlPanel", "\346\216\247\345\210\266\351\235\242\346\235\277", nullptr));
+        label123->setText(QCoreApplication::translate("ControlPanel", "\351\241\265\351\235\242URL", nullptr));
+        urlEditor->setPlaceholderText(QCoreApplication::translate("ControlPanel", "\350\257\267\350\276\223\345\205\245\351\241\265\351\235\242URL,\351\234\200\345\214\205\345\220\253http/https", nullptr));
+        editUrl->setText(QCoreApplication::translate("ControlPanel", "\347\241\256\350\256\244", nullptr));
         label_3->setText(QCoreApplication::translate("ControlPanel", "\344\277\256\346\224\271\347\252\227\345\217\243\346\240\207\351\242\230", nullptr));
         titleEditConfirm->setText(QCoreApplication::translate("ControlPanel", "\347\241\256\350\256\244", nullptr));
         label_2->setText(QCoreApplication::translate("ControlPanel", "\350\207\252\345\256\232\344\271\211CSS", nullptr));

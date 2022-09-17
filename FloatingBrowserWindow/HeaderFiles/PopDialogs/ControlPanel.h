@@ -16,7 +16,7 @@ signals:
     void ModifyCSSSignal(QString css);
     void ClearCssSignal();
     void ModifyTransparentSignal(int transparent);
-
+    void ModifyPageUrlSignal(QString url);
 
 
 private:
@@ -28,6 +28,7 @@ private slots:
     void ClearCssClicked();
     void TransparentSliderChanged();
     void TransparentNumChanged();
+    void ModifyUrlClicked();
     //收到主窗口关闭的信号关闭窗口
     void ReceiveMainWindowCloseSignal();
 };

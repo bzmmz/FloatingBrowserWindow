@@ -23,7 +23,11 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>控制面板</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../../Resources/Resource.qrc">
+    <normaloff>:/new/prefix1/宝石兽.jpg</normaloff>:/new/prefix1/宝石兽.jpg</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/*
@@ -612,6 +616,93 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
        <number>10</number>
       </property>
       <item>
+       <layout class="QHBoxLayout" name="URL" stretch="10,50,1">
+        <property name="spacing">
+         <number>10</number>
+        </property>
+        <property name="leftMargin">
+         <number>10</number>
+        </property>
+        <property name="topMargin">
+         <number>10</number>
+        </property>
+        <property name="rightMargin">
+         <number>10</number>
+        </property>
+        <property name="bottomMargin">
+         <number>10</number>
+        </property>
+        <item>
+         <widget class="QLabel" name="label123">
+          <property name="maximumSize">
+           <size>
+            <width>200</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>思源宋体</family>
+            <pointsize>16</pointsize>
+            <weight>75</weight>
+            <bold>true</bold>
+           </font>
+          </property>
+          <property name="text">
+           <string>页面URL</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QLineEdit" name="urlEditor">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>思源宋体</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="placeholderText">
+           <string>请输入页面URL,需包含http/https</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QPushButton" name="editUrl">
+          <property name="minimumSize">
+           <size>
+            <width>80</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>40</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>思源宋体</family>
+            <pointsize>16</pointsize>
+           </font>
+          </property>
+          <property name="text">
+           <string>确认</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
        <layout class="QHBoxLayout" name="WindowTitle">
         <property name="sizeConstraint">
          <enum>QLayout::SetMinimumSize</enum>
@@ -791,6 +882,9 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <property name="text">
            <string>自定义CSS</string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
          </widget>
         </item>
         <item>
@@ -799,6 +893,12 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
            <size>
             <width>250</width>
             <height>20</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>400</height>
            </size>
           </property>
           <property name="font">
@@ -976,6 +1076,12 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
           </property>
+          <property name="invertedAppearance">
+           <bool>false</bool>
+          </property>
+          <property name="invertedControls">
+           <bool>false</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -1019,12 +1125,14 @@ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
      <x>0</x>
      <y>0</y>
      <width>1008</width>
-     <height>20</height>
+     <height>23</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../../Resources/Resource.qrc"/>
+ </resources>
  <connections/>
 </ui>

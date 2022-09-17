@@ -21,7 +21,6 @@ ControlPanel::ControlPanel(InnerBrowser* parent)
 
 
     //透明度修改
-    //todo
     ui.transparentEdit->setValue(parent->GetTransparent());
     ui.transparentNum->setText(QString::number(parent->GetTransparent()));
     //限制输入框输入
@@ -38,6 +37,13 @@ ControlPanel::ControlPanel(InnerBrowser* parent)
     connect(ui.transparentNum, &QLineEdit::editingFinished, this, &ControlPanel::TransparentNumChanged);
 
     connect(this, &ControlPanel::ModifyTransparentSignal, parent, &InnerBrowser::SetTransparent);
+
+    //URL修改
+    ui.urlEditor->setText(parent->GetPageUrl());
+    connect(ui.editUrl, &QAbstractButton::clicked, this, &ControlPanel::ModifyUrlClicked);
+    connect(this, &ControlPanel::ModifyPageUrlSignal, parent, &InnerBrowser::ChangeUrl);
+
+
 
     //绑定收到主窗口关闭信号的反应
     connect(parent, &InnerBrowser::MainWindowCloseSignal,this, &ControlPanel::ReceiveMainWindowCloseSignal);
@@ -82,6 +88,11 @@ void ControlPanel::TransparentNumChanged()
 
     ui.transparentEdit->setValue(t);
     emit ModifyTransparentSignal(t);
+}
+
+void ControlPanel::ModifyUrlClicked()
+{
+    emit ModifyPageUrlSignal(ui.urlEditor->text());
 }
 
 void ControlPanel::ReceiveMainWindowCloseSignal()

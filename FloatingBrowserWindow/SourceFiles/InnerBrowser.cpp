@@ -22,6 +22,12 @@ void InnerBrowser::ClearCss()
     this->webview->RemoveCss();
 }
 
+void InnerBrowser::ChangeUrl(QString url)
+{
+    manager.SetUrl(url);
+    this->webview->LoadUrl(url);
+}
+
 void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     //左键单击，显示窗口
@@ -99,6 +105,12 @@ void WebView::RemoveCss()
     this->page()->scripts().remove(script);
 }
 
+void WebView::LoadUrl(QString url)
+{
+    this->load(url);
+    InjectCss(this->GetCss());
+}
+
 void InnerBrowser::SetWindowTitle(QString title)
 {
     this->setWindowTitle(title);
@@ -122,6 +134,7 @@ InnerBrowser::InnerBrowser()
     
     load_config();
     InitSystemTray();
+    this->setWindowIcon(QIcon(":/image/ruby.png"));
     auto config = manager.GetConfig();
     this->lock(true);
     //移动窗口
@@ -143,7 +156,7 @@ InnerBrowser::InnerBrowser()
     this->layout->addWidget(this->webview);
     this->setLayout(this->layout);
 
-    this->webview->load(QUrl(config.room_url));
+    this->webview->load(QUrl(config.page_url));
     //移动和缩放
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
@@ -174,6 +187,7 @@ void InnerBrowser::lock(bool on)
 
 void InnerBrowser::ApplyConfig(BrowserConfig::Config config)
 {
+    return;
 }
 
 void InnerBrowser::MoveWindow(float x, float y)
@@ -200,6 +214,11 @@ int InnerBrowser::GetTransparent()
 QString InnerBrowser::GetCss()
 {
     return webview->GetCss();
+}
+
+QString InnerBrowser::GetPageUrl()
+{
+    return manager.GetUrl();
 }
 
 CM_LoadConfigCondition InnerBrowser::GetLoadCondition()

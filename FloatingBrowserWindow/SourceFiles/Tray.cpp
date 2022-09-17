@@ -6,8 +6,8 @@ void Tray::Init()
     trayicon = new QSystemTrayIcon();
     
     InitMenu();
-    trayicon->setToolTip(QStringLiteral("托盘捏"));
-    trayicon->setIcon(QIcon("heart.png"));
+    trayicon->setToolTip(QStringLiteral("悬浮窗小工具"));
+    trayicon->setIcon(QIcon(":/image/ruby.png"));
     //绑定点击托盘的函数
     connect(trayicon, &QSystemTrayIcon::activated, window, &InnerBrowser::IconClicked);
 
@@ -20,11 +20,6 @@ void Tray::InitMenu()
 {
     menu = new QMenu(window);
 
-    //更改窗口标题
-    set_title = new QAction(menu);
-    set_title->setText(QStringLiteral("更改窗口标题"));
-    connect(set_title, &QAction::triggered, this, &Tray::PopModifyTitleWindow);
-    menu->addAction(set_title);
 
     //控制面板
     control_panel = new QAction(menu);

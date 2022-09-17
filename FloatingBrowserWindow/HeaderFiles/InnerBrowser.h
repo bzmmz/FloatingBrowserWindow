@@ -13,6 +13,7 @@ public:
     WebView(QString css);
     void ReloadCss(QString css);
     void RemoveCss();
+    void LoadUrl(QString url);
     QString GetCss();
 
 private:
@@ -44,6 +45,7 @@ public slots:
     void SetCutomCSS(QString css);
     void SetTransparent(int transparent);
     void ClearCss();
+    void ChangeUrl(QString url);
 signals:
     void MainWindowCloseSignal();
 public:
@@ -56,6 +58,7 @@ public:
     void ScaleWindowPage(float scale);
     int GetTransparent();
     QString GetCss();
+    QString GetPageUrl();
     CM_LoadConfigCondition GetLoadCondition();
 private:
     ConfigManager manager;

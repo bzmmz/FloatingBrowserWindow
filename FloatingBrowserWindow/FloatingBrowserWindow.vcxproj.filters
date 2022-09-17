@@ -63,6 +63,9 @@
     <Image Include="Resources\heart.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="Resources\ruby.jpg">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="HeaderFiles\PopDialogs\resources\ControlPanel.ui">
@@ -90,5 +93,10 @@
     <None Include="config.json" />
     <None Include="style.css" />
     <None Include="style.qss" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resources\Resource.qrc">
+      <Filter>Resource Files</Filter>
+    </QtRcc>
   </ItemGroup>
 </Project>

@@ -14,7 +14,7 @@ void BrowserConfig::to_json(json& j, const Config& config)
         {"height", config.height},
         {"scale", config.scale},
         {"is_transparent", config.is_transparent},
-        {"room_url", SH::qstr2str(config.room_url)},
+        {"page_url", SH::qstr2str(config.page_url)},
         {"windowtitle", SH::qstr2str(config.windowtitle)},
     };
 }
@@ -29,7 +29,7 @@ void BrowserConfig::from_json(const json& j, Config& config)
     j.at("height").get_to(config.height);
     j.at("scale").get_to(config.scale);
     j.at("is_transparent").get_to(config.is_transparent);
-    config.room_url = SH::str2qstr(j.at("room_url").get<string>());
+    config.page_url = SH::str2qstr(j.at("page_url").get<string>());
     config.windowtitle = SH::str2qstr(j.at("windowtitle").get<string>());
 }
 
@@ -112,6 +112,16 @@ void ConfigManager::SaveCurrentConfig(InnerBrowser* window)
 void ConfigManager::SetTransparent(double transparent)
 {
     config.transparent = transparent;
+}
+
+void ConfigManager::SetUrl(QString url)
+{
+    config.page_url = url;
+}
+
+QString ConfigManager::GetUrl()
+{
+    return config.page_url;
 }
 
 BrowserConfig::Config ConfigManager::GetConfig()

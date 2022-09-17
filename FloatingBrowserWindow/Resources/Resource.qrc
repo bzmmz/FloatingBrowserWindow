@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/image">
+        <file>heart.png</file>
+        <file>ruby.png</file>
+    </qresource>
+</RCC>
