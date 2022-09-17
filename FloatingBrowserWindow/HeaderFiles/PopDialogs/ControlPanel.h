@@ -10,14 +10,13 @@ class ControlPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    ControlPanel(PageBrowser* parent);
+    ControlPanel(PageBrowser *parent);
 signals:
     void ModifyTitleSignal(QString title);
     void ModifyCSSSignal(QString css);
     void ClearCssSignal();
     void ModifyTransparentSignal(int transparent);
     void ModifyPageUrlSignal(QString url);
-
 
 private:
     Ui_ControlPanel ui;

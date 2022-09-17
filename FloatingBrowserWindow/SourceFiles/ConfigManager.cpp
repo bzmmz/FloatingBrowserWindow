@@ -3,7 +3,7 @@
 #include <QString>
 #include "PageBrowser.h"
 #include "StringHelper.h"
-void BrowserConfig::to_json(json& j, const Config& config)
+void BrowserConfig::to_json(json &j, const Config &config)
 {
     j = json{
         {"transparent", config.transparent},
@@ -22,7 +22,7 @@ void BrowserConfig::to_json(json& j, const Config& config)
     };
 }
 
-void BrowserConfig::from_json(const json& j, Config& config)
+void BrowserConfig::from_json(const json &j, Config &config)
 {
     j.at("transparent").get_to(config.transparent);
     config.css = SH::str2qstr(j.at("css").get<string>());
@@ -39,7 +39,7 @@ void BrowserConfig::from_json(const json& j, Config& config)
     j.at("free_move").get_to(config.free_move);
 }
 
-void ConfigManager::ReadWholeFile(stringstream& ss, ifstream* read)
+void ConfigManager::ReadWholeFile(stringstream &ss, ifstream *read)
 {
     char ch;
     while (ss && read->get(ch))
@@ -78,12 +78,12 @@ void ConfigManager::LoadConfig()
                 config = j.get<BrowserConfig::Config>();
                 load_config_condition = CM_SUCCESS_LOAD_FILE;
             }
-            catch (const std::exception& e)
+            catch (const std::exception &e)
             {
                 load_config_condition = CM_ERROR_CONFIG_FILE;
             }
         }
-        catch (const std::exception& e)
+        catch (const std::exception &e)
         {
             load_config_condition = CM_ERROR_CONFIG_FILE;
         }
@@ -98,7 +98,7 @@ void ConfigManager::SaveConfig()
     write->close();
 }
 
-void ConfigManager::SaveCurrentConfig(PageBrowser* window)
+void ConfigManager::SaveCurrentConfig(PageBrowser *window)
 {
     config.x = window->x();
     config.y = window->y();

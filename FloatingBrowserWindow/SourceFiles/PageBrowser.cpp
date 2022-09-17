@@ -43,7 +43,7 @@ void PageBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-void PageBrowser::closeEvent(QCloseEvent* event)
+void PageBrowser::closeEvent(QCloseEvent *event)
 {
     emit MainWindowCloseSignal();
     manager->SaveCurrentConfig(this);
@@ -56,33 +56,33 @@ void PageBrowser::closeEvent(QCloseEvent* event)
     }
 }
 
-bool WebView::eventFilter(QObject* obj, QEvent* event)
+bool WebView::eventFilter(QObject *obj, QEvent *event)
 {
     //只在开启了自由移动窗口的情况下额外处理,否则只用默认处理
-    if(free_move)
+    if (free_move)
     {
         if (obj == child && event->type() == QEvent::MouseButtonPress)
         {
-            mousePressEvent(static_cast<QMouseEvent*>(event));
+            mousePressEvent(static_cast<QMouseEvent *>(event));
         }
         else if (obj == child && event->type() == QEvent::MouseMove)
         {
-            mouseMoveEvent(static_cast<QMouseEvent*>(event));
+            mouseMoveEvent(static_cast<QMouseEvent *>(event));
         }
         else if (obj == child && event->type() == QEvent::MouseButtonRelease)
         {
-            mouseReleaseEvent(static_cast<QMouseEvent*>(event));
+            mouseReleaseEvent(static_cast<QMouseEvent *>(event));
         }
     }
-    
+
     return QWebEngineView::eventFilter(obj, event);
 }
 
-bool WebView::event(QEvent* event)
+bool WebView::event(QEvent *event)
 {
     if (event->type() == QEvent::ChildPolished)
     {
-        QChildEvent* child_event = static_cast<QChildEvent*>(event);
+        QChildEvent *child_event = static_cast<QChildEvent *>(event);
         child = child_event->child();
         if (child != nullptr)
         {
@@ -92,7 +92,7 @@ bool WebView::event(QEvent* event)
     return QWebEngineView::event(event);
 }
 
-void WebView::mousePressEvent(QMouseEvent* event)
+void WebView::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -104,7 +104,7 @@ void WebView::mousePressEvent(QMouseEvent* event)
     }
 }
 
-void WebView::mouseMoveEvent(QMouseEvent* event)
+void WebView::mouseMoveEvent(QMouseEvent *event)
 {
     if (be_draggd)
     {
@@ -115,7 +115,7 @@ void WebView::mouseMoveEvent(QMouseEvent* event)
     }
 }
 
-void WebView::mouseReleaseEvent(QMouseEvent* event)
+void WebView::mouseReleaseEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton)
     {
@@ -123,7 +123,7 @@ void WebView::mouseReleaseEvent(QMouseEvent* event)
     }
 }
 
-WebView::WebView(QString css, PageBrowser* parent)
+WebView::WebView(QString css, PageBrowser *parent)
 {
     this->parent = parent;
     setMouseTracking(false);
@@ -147,7 +147,7 @@ void WebView::SetMouseEventTransparent(bool m)
 {
     mouse_transparent = m;
     this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
-    static_cast<QOpenGLWidget*>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    static_cast<QOpenGLWidget *>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, m);
     child->installEventFilter(this);
 }
 
@@ -159,12 +159,12 @@ void WebView::SetFreeMove(bool m)
 QString WebView::CombineScript(QString css)
 {
     QString s = QString::fromLatin1("(function() {"\
-        "    css = document.createElement('style');"\
-        "    css.type = 'text/css';"\
-        "    css.id = 'css';"\
-        "    document.head.appendChild(css);"\
-        "    css.innerText = '%1';"\
-        "})()").arg(css.simplified());
+                                    "    css = document.createElement('style');"\
+                                    "    css.type = 'text/css';"\
+                                    "    css.id = 'css';"\
+                                    "    document.head.appendChild(css);"\
+                                    "    css.innerText = '%1';"\
+                                    "})()").arg(css.simplified());
     return s;
 }
 
@@ -183,10 +183,10 @@ void WebView::InjectCss(QString css)
 void WebView::RemoveCss()
 {
     java_script = QString::fromLatin1("(function() {"\
-        "    var element = document.getElementById('css');"\
-        "    element.outerHTML = '';"\
-        "    delete element;"\
-        "})()");
+                                      "    var element = document.getElementById('css');"\
+                                      "    element.outerHTML = '';"\
+                                      "    delete element;"\
+                                      "})()");
     this->css = "";
     //todo,bug.无css样式第一次添加之后立即清除没用,得跑两次,很迷惑.如果是从config里面加载来的就没问题
     this->page()->runJavaScript(java_script, QWebEngineScript::ApplicationWorld);

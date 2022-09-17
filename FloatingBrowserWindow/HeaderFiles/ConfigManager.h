@@ -26,12 +26,9 @@ namespace BrowserConfig
         bool free_move = true;
     };
 
-    void to_json(json& j, const Config& config);
+    void to_json(json &j, const Config &config);
 
-    void from_json(const json& j, Config& config);
-
-
-
+    void from_json(const json &j, Config &config);
 };
 enum CM_LoadConfigCondition
 {
@@ -42,7 +39,6 @@ enum CM_LoadConfigCondition
 
 class ConfigManager
 {
-    
 private:
     string config_file_name = "config.json";
     ifstream *read;
@@ -50,14 +46,14 @@ private:
     BrowserConfig::Config config;
     CM_LoadConfigCondition load_config_condition;
 
-    inline void ReadWholeFile(stringstream& ss, ifstream *read);
+    inline void ReadWholeFile(stringstream &ss, ifstream *read);
 public:
-    
+
     ConfigManager();
     ~ConfigManager();
     void LoadConfig();
     void SaveConfig();
-    void SaveCurrentConfig(PageBrowser* window);
+    void SaveCurrentConfig(PageBrowser *window);
     void SetTransparent(double transparent);
     void SetUrl(QString url);
     void SetLock(bool locked);

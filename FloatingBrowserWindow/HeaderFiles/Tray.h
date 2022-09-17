@@ -9,13 +9,13 @@
 class Tray : public QObject
 {
     Q_OBJECT
-        
+
 public:
     friend PageBrowser;
-    Tray(PageBrowser* window);
+    Tray(PageBrowser *window);
     ~Tray() override;
     void ShowMenu();
-    PageBrowser* GetWindow();
+    PageBrowser *GetWindow();
     void ShowMessage(QString message);
 public slots:
     void PopControlPanel();
@@ -31,16 +31,16 @@ private:
     bool locked;
     bool mouse_penetration;
     bool can_free_move;
-    PageBrowser* window;
+    PageBrowser *window;
     QSystemTrayIcon *trayicon;  //托盘核心
     QMenu *menu;
-    QAction* quit;
-    QAction* control_panel;
-    QAction* hide_control;
-    QAction* mouse_control;
-    QAction* lock;
-    QAction* reset_pos;
-    QAction* free_move;
+    QAction *quit;
+    QAction *control_panel;
+    QAction *hide_control;
+    QAction *mouse_control;
+    QAction *lock;
+    QAction *reset_pos;
+    QAction *free_move;
 private slots:
     void TrayClicked(QSystemTrayIcon::ActivationReason reason);
 };

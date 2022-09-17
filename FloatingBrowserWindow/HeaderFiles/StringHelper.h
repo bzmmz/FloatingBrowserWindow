@@ -9,7 +9,6 @@
 #define DBP(...)
 #endif
 
-
 namespace SH
 {
     inline QString str2qstr(std::string s)
@@ -25,8 +24,8 @@ namespace SH
 
     inline QString utf8_2_gbk(QString &s)
     {
-        QTextCodec* utf8 = QTextCodec::codecForName("UTF-8");
-        QTextCodec* gbk = QTextCodec::codecForName("GBK");
+        QTextCodec *utf8 = QTextCodec::codecForName("UTF-8");
+        QTextCodec *gbk = QTextCodec::codecForName("GBK");
 #ifdef _DEBUG
         QByteArray origin = s.toLocal8Bit();
         DBP("Origin utf-8 bytes:\n");
@@ -50,8 +49,8 @@ namespace SH
 
     inline QString gbk_2_utf8(QString &s)
     {
-        QTextCodec* utf8 = QTextCodec::codecForName("UTF-8");
-        QTextCodec* gbk = QTextCodec::codecForName("GBK");
+        QTextCodec *utf8 = QTextCodec::codecForName("UTF-8");
+        QTextCodec *gbk = QTextCodec::codecForName("GBK");
 #ifdef _DEBUG
         QByteArray origin = s.toLocal8Bit();
         DBP("Origin gbk bytes:\n");
@@ -73,8 +72,4 @@ namespace SH
         s = QString::fromLocal8Bit(utf8_bytes);
         return s;
     }
-
-    
-
-
 }

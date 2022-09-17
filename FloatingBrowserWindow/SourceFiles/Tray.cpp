@@ -65,13 +65,13 @@ void Tray::InitMenu()
     reset_pos = new QAction(menu);
     reset_pos->setText(QStringLiteral("重置窗口位置"));
     //reset_pos->setToolTip(QStringLiteral("把窗口弄到看不见的地方之后重置位置"));
-    connect(reset_pos, &QAction::triggered, [this](void) {window->move(QPoint(0, 0)); });
+    connect(reset_pos, &QAction::triggered, [this](void){window->move(QPoint(0, 0)); });
     menu->addAction(reset_pos);
 
     //退出
     quit = new QAction(menu);
     quit->setText(QStringLiteral("退出"));
-    connect(quit, &QAction::triggered, [this](bool) { QApplication::quit(); });
+    connect(quit, &QAction::triggered, [this](bool){ QApplication::quit(); });
     menu->addAction(quit);
 }
 
@@ -100,7 +100,7 @@ void Tray::TrayClicked(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-Tray::Tray(PageBrowser* window)
+Tray::Tray(PageBrowser *window)
 {
     this->window = window;
     Init();
@@ -126,7 +126,7 @@ void Tray::ShowMenu()
     menu->exec(Pos);
 }
 
-PageBrowser* Tray::GetWindow()
+PageBrowser *Tray::GetWindow()
 {
     return window;
 }

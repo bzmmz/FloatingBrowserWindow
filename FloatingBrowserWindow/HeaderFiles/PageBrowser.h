@@ -9,7 +9,7 @@
 class WebView : public QWebEngineView
 {
 public:
-    WebView(QString css, PageBrowser* parent);
+    WebView(QString css, PageBrowser *parent);
     void ReloadCss(QString css);
     void RemoveCss();
     void LoadUrl(QString url);
@@ -21,13 +21,12 @@ private:
     QString CombineScript(QString css);
     //用java_script脚本注入css
     void InjectCss(QString css);
-    PageBrowser* parent;
+    PageBrowser *parent;
     QString css;
     QString java_script;
     QWebEngineScript *script_engine;
     bool mouse_transparent = false;
     bool free_move = true;
-    
 
     const QString JS_LOAD_CSS_FROM_STR = "'(function(){\\nlet style_node = document.createElement(\\'style\\');\\nstyle_node.append(document.createTextNode(`\\n";
 protected:
@@ -35,19 +34,16 @@ protected:
     //QWebEngineView不能直接响应MouseEvent,需要重载eventFilter和event两个函数,
     //event函数中捕获QEvent::ChildPolished产生的child(QOpenGLWidget),然后注册其eventfilter为this
     //之后在eventfilter中捕获相关的event来处理
-    QObject* child;
-    bool eventFilter(QObject* obj, QEvent* event) override;
-    bool event(QEvent* event) override;
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
+    QObject *child;
+    bool eventFilter(QObject *obj, QEvent *event) override;
+    bool event(QEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void mouseReleaseEvent(QMouseEvent *event) override;
     bool be_draggd = false;
     QPoint mouse_start_point;
     QPoint window_pos;
 };
-
-
-
 
 /**
  * 内嵌的浏览器
@@ -75,7 +71,7 @@ public:
     void SetMouseEventTransparent(bool m);
     void SetFreeMove(bool move);
     int GetTransparent();
-    
+
     QString GetCss();
     QString GetPageUrl();
     CM_LoadConfigCondition GetLoadCondition();
@@ -83,18 +79,15 @@ private:
     ConfigManager *manager;
     QHBoxLayout *layout;
     WebView *webview;
-    Tray* tray;
+    Tray *tray;
     QApplication *main;
     void load_config();
     void InitSystemTray();
     void ReloadCSS(QString css);
-    
+
 private slots:
     //点击托盘时的响应函数
     void IconClicked(QSystemTrayIcon::ActivationReason reason);
 protected:
-    void closeEvent(QCloseEvent* event) override;
+    void closeEvent(QCloseEvent *event) override;
 };
-
-
-

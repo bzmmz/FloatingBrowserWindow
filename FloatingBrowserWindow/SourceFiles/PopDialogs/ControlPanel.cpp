@@ -1,5 +1,5 @@
 ﻿#include "ControlPanel.h"
-ControlPanel::ControlPanel(PageBrowser* parent)
+ControlPanel::ControlPanel(PageBrowser *parent)
 {
     Qt::WindowFlags flags = 0;
     flags |= Qt::WindowStaysOnTopHint;
@@ -25,7 +25,7 @@ ControlPanel::ControlPanel(PageBrowser* parent)
     //限制输入框输入
     QRegExp t("[0-9]+$");
 
-    QRegExpValidator* validator = new QRegExpValidator(t, ui.transparentNum);
+    QRegExpValidator *validator = new QRegExpValidator(t, ui.transparentNum);
     ui.transparentNum->setValidator(validator);
     ui.transparentNum->setMaxLength(3);
 
