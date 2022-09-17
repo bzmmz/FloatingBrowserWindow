@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForLocale(codec);
     //Test();
     a->setQuitOnLastWindowClosed(false);
-    auto browser = new PageBrowser(a);
+    auto browser = new PageBrowser();
 
     int code = a->exec();
     return code;

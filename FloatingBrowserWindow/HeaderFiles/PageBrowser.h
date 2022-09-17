@@ -14,6 +14,7 @@ public:
     void RemoveCss();
     void LoadUrl(QString url);
     QString GetCss();
+    void SetMouseEventTransparent(bool m);
 
 private:
     //拼接脚本
@@ -24,14 +25,14 @@ private:
     QString css;
     QString java_script;
     QWebEngineScript *script_engine;
-
+    bool mouse_transparent = false;
     
 
     const QString JS_LOAD_CSS_FROM_STR = "'(function(){\\nlet style_node = document.createElement(\\'style\\');\\nstyle_node.append(document.createTextNode(`\\n";
 protected:
     //鼠标任意位置拖拽
     //QWebEngineView不能直接响应MouseEvent,需要重载eventFilter和event两个函数,
-    //event函数中捕获QEvent::ChildPolished产生的child,然后注册其eventfilter为this
+    //event函数中捕获QEvent::ChildPolished产生的child(QOpenGLWidget),然后注册其eventfilter为this
     //之后在eventfilter中捕获相关的event来处理
     QObject* child;
     bool eventFilter(QObject* obj, QEvent* event) override;
@@ -64,7 +65,7 @@ public slots:
 signals:
     void MainWindowCloseSignal();
 public:
-    PageBrowser(QApplication* main);
+    PageBrowser();
     ~PageBrowser() override;
     void ApplyConfig(BrowserConfig::Config config);
     void MoveWindow(float x, float y);

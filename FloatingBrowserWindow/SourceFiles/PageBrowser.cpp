@@ -80,6 +80,7 @@ bool WebView::event(QEvent* event)
     {
         QChildEvent* child_event = static_cast<QChildEvent*>(event);
         child = child_event->child();
+        static_cast<QOpenGLWidget*>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, mouse_transparent);
         if (child != nullptr)
         {
             child->installEventFilter(this);
@@ -140,6 +141,13 @@ void WebView::ReloadCss(QString css)
 QString WebView::GetCss()
 {
     return css;
+}
+
+void WebView::SetMouseEventTransparent(bool m)
+{
+    mouse_transparent = m;
+    this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    static_cast<QOpenGLWidget*>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, m);
 }
 
 QString WebView::CombineScript(QString css)
@@ -205,15 +213,13 @@ void PageBrowser::SetTransparent(int transparent)
     this->setWindowOpacity(t);
 }
 
-PageBrowser::PageBrowser(QApplication* main)
+PageBrowser::PageBrowser()
 {
-    this->main = main;
     DBP("主窗口生成\n");
     load_config();
     InitSystemTray();
     this->setWindowIcon(QIcon(":/image/ruby.png"));
     auto config = manager->GetConfig();
-    //this->lock(true);
     //允许透明
     this->setAttribute(Qt::WA_TranslucentBackground, true);
     //移动窗口
@@ -237,18 +243,13 @@ PageBrowser::PageBrowser(QApplication* main)
     this->setLayout(this->layout);
 
     this->webview->load(QUrl(config.page_url));
+
+    SetMouseEventTransparent(config.mouse_penetration);
+    lock(config.lock);
     //移动和缩放
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
-    
-    
     this->ScaleWindowPage(config.scale);
-    //去掉窗口阴影达到纯透明效果
-    //this->setAttribute(Qt::WA_TranslucentBackground);
-    //setWindowFlags(Qt::Tool); //Qt::FramelessWindowHint | 
-    ////鼠标穿透
-    //this->setAttribute(Qt::WA_TransparentForMouseEvents,true);
-
     this->show(); 
     
 
@@ -293,7 +294,7 @@ void PageBrowser::ScaleWindowPage(float scale)
 void PageBrowser::SetMouseEventTransparent(bool m)
 {
     this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
-    this->webview->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    this->webview->SetMouseEventTransparent(m);
 }
 
 int PageBrowser::GetTransparent()

@@ -66,7 +66,7 @@ void Tray::InitMenu()
     //退出
     quit = new QAction(menu);
     quit->setText(QStringLiteral("退出"));
-    connect(quit, &QAction::triggered, [this](bool) {window->main->quit(); });
+    connect(quit, &QAction::triggered, [this](bool) { QApplication::exit(0); });
     menu->addAction(quit);
 }
 
@@ -149,7 +149,7 @@ void Tray::SwitchShowAndHide()
     else
     {
         show = true;
-        window->hide();
+        window->show();
         hide_control->setText(QStringLiteral("隐藏窗口"));
     }
 }
@@ -159,7 +159,7 @@ void Tray::SwitchLock()
     locked = !locked;
     window->setWindowFlag(Qt::WindowStaysOnTopHint, locked);
     window->setWindowFlag(Qt::FramelessWindowHint, locked);
-    window->setWindowFlag(Qt::Tool, locked);
+    //window->setWindowFlag(Qt::Tool, locked);
     window->show();
     window->manager->SetLock(locked);
     this->lock->setChecked(locked);
@@ -168,6 +168,7 @@ void Tray::SwitchLock()
 void Tray::SwitchMousePenertration()
 {
     mouse_penetration = !mouse_penetration;
+    window->SetMouseEventTransparent(mouse_penetration);
     window->manager->SetMousePenertration(mouse_penetration);
     this->mouse_control->setChecked(mouse_penetration);
 }
