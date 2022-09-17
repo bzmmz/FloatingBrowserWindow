@@ -1,7 +1,7 @@
 ﻿#include "ConfigManager.h"
 #include <iostream>
 #include <QString>
-#include "InnerBrowser.h"
+#include "PageBrowser.h"
 #include "StringHelper.h"
 void BrowserConfig::to_json(json& j, const Config& config)
 {
@@ -95,7 +95,7 @@ void ConfigManager::SaveConfig()
     write->close();
 }
 
-void ConfigManager::SaveCurrentConfig(InnerBrowser* window)
+void ConfigManager::SaveCurrentConfig(PageBrowser* window)
 {
     config.x = window->x();
     config.y = window->y();

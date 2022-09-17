@@ -1,5 +1,5 @@
 ﻿#include "ControlPanel.h"
-ControlPanel::ControlPanel(InnerBrowser* parent)
+ControlPanel::ControlPanel(PageBrowser* parent)
 {
     Qt::WindowFlags flags = 0;
     flags |= Qt::WindowStaysOnTopHint;
@@ -9,15 +9,15 @@ ControlPanel::ControlPanel(InnerBrowser* parent)
     //窗口标题修改
     ui.titleEdit->setText(parent->windowTitle());
     connect(ui.titleEditConfirm, &QAbstractButton::clicked, this, &ControlPanel::EditTitleConfirmClicked);
-    connect(this, &ControlPanel::ModifyTitleSignal, parent, &InnerBrowser::SetWindowTitle);
+    connect(this, &ControlPanel::ModifyTitleSignal, parent, &PageBrowser::SetWindowTitle);
     //CSS修改
     ui.cssEdit->setPlainText(parent->GetCss());
     connect(ui.cssEditConfirm, &QAbstractButton::clicked, this, &ControlPanel::EditCssConfirmClicked);
-    connect(this, &ControlPanel::ModifyCSSSignal, parent, &InnerBrowser::SetCutomCSS);
+    connect(this, &ControlPanel::ModifyCSSSignal, parent, &PageBrowser::SetCutomCSS);
 
     //CSS清除
     connect(ui.clearcss, &QAbstractButton::clicked, this, &ControlPanel::ClearCssClicked);
-    connect(this, &ControlPanel::ClearCssSignal, parent, &InnerBrowser::ClearCss);
+    connect(this, &ControlPanel::ClearCssSignal, parent, &PageBrowser::ClearCss);
 
 
     //透明度修改
@@ -36,17 +36,17 @@ ControlPanel::ControlPanel(InnerBrowser* parent)
     connect(ui.transparentEdit, &QSlider::valueChanged, this, &ControlPanel::TransparentSliderChanged);
     connect(ui.transparentNum, &QLineEdit::editingFinished, this, &ControlPanel::TransparentNumChanged);
 
-    connect(this, &ControlPanel::ModifyTransparentSignal, parent, &InnerBrowser::SetTransparent);
+    connect(this, &ControlPanel::ModifyTransparentSignal, parent, &PageBrowser::SetTransparent);
 
     //URL修改
     ui.urlEditor->setText(parent->GetPageUrl());
     connect(ui.editUrl, &QAbstractButton::clicked, this, &ControlPanel::ModifyUrlClicked);
-    connect(this, &ControlPanel::ModifyPageUrlSignal, parent, &InnerBrowser::ChangeUrl);
+    connect(this, &ControlPanel::ModifyPageUrlSignal, parent, &PageBrowser::ChangeUrl);
 
 
 
     //绑定收到主窗口关闭信号的反应
-    connect(parent, &InnerBrowser::MainWindowCloseSignal,this, &ControlPanel::ReceiveMainWindowCloseSignal);
+    connect(parent, &PageBrowser::MainWindowCloseSignal,this, &ControlPanel::ReceiveMainWindowCloseSignal);
 }
 
 void ControlPanel::EditTitleConfirmClicked()

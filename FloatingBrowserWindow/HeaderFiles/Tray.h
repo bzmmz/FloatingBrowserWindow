@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include <qsystemtrayicon.h>
 #include <QtWidgets/QtWidgets>
-#include "InnerBrowser.h"
+#include "PageBrowser.h"
 #include "StringInputDialog.h"
 #include "ControlPanel.h"
 /*
@@ -12,9 +12,9 @@ class Tray : public QObject
    Q_OBJECT
 public:
     
-    Tray(InnerBrowser* window);
+    Tray(PageBrowser* window);
     void ShowMenu();
-    InnerBrowser* GetWindow();
+    PageBrowser* GetWindow();
     void ShowMessage(QString message);
     
 public slots:
@@ -25,7 +25,7 @@ private:
     void Init();
     void InitMenu();
     void ShowWindowLoadConfigInfo();
-    InnerBrowser* window;
+    PageBrowser* window;
     QSystemTrayIcon *trayicon;  //托盘核心
     QMenu *menu;
     QAction* quit;

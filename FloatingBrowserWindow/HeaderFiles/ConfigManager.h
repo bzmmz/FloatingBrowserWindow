@@ -6,7 +6,7 @@
 #include <QtWidgets/QtWidgets>
 using namespace std;
 using namespace nlohmann;
-class InnerBrowser;
+class PageBrowser;
 namespace BrowserConfig
 {
     struct Config
@@ -53,7 +53,7 @@ public:
     ConfigManager();
     void LoadConfig();
     void SaveConfig();
-    void SaveCurrentConfig(InnerBrowser* window);
+    void SaveCurrentConfig(PageBrowser* window);
     void SetTransparent(double transparent);
     void SetUrl(QString url);
     QString GetUrl();

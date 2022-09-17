@@ -1,34 +1,34 @@
-﻿#include "InnerBrowser.h"
+﻿#include "PageBrowser.h"
 #include "StringHelper.h"
 #include <QString>
-void InnerBrowser::load_config()
+void PageBrowser::load_config()
 {
     manager.LoadConfig();
     return;
 }
 
-void InnerBrowser::InitSystemTray()
+void PageBrowser::InitSystemTray()
 {
     tray = new Tray(this);
 }
 
-void InnerBrowser::ReloadCSS(QString css)
+void PageBrowser::ReloadCSS(QString css)
 {
     this->webview->ReloadCss(css);
 }
 
-void InnerBrowser::ClearCss()
+void PageBrowser::ClearCss()
 {
     this->webview->RemoveCss();
 }
 
-void InnerBrowser::ChangeUrl(QString url)
+void PageBrowser::ChangeUrl(QString url)
 {
     manager.SetUrl(url);
     this->webview->LoadUrl(url);
 }
 
-void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
+void PageBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 {
     //左键单击，显示窗口
     if (reason == QSystemTrayIcon::Trigger)
@@ -42,14 +42,82 @@ void InnerBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
     }
 }
 
-void InnerBrowser::closeEvent(QCloseEvent* event)
+void PageBrowser::closeEvent(QCloseEvent* event)
 {
     emit MainWindowCloseSignal();
     manager.SaveCurrentConfig(this);
 }
 
-WebView::WebView(QString css)
+
+bool WebView::eventFilter(QObject* obj, QEvent* event)
 {
+    if (obj == child && event->type() == QEvent::MouseButtonPress)
+    {
+        mousePressEvent(static_cast<QMouseEvent*>(event));
+    }
+    else if(obj == child && event->type() == QEvent::MouseMove)
+    {
+        mouseMoveEvent(static_cast<QMouseEvent*>(event));
+    }
+    else if(obj == child && event->type() == QEvent::MouseButtonRelease)
+    {
+        mouseReleaseEvent(static_cast<QMouseEvent*>(event));
+    }
+    return QWebEngineView::eventFilter(obj, event);
+}
+
+bool WebView::event(QEvent* event)
+{
+    if (event->type() == QEvent::ChildPolished)
+    {
+        QChildEvent* child_event = static_cast<QChildEvent*>(event);
+        child = child_event->child();
+        if (child != nullptr)
+        {
+            child->installEventFilter(this);
+        }
+    }
+    return QWebEngineView::event(event);
+}
+
+void WebView::mousePressEvent(QMouseEvent* event)
+{
+    DBP("MousePressEvent\n");
+    if (event->button() == Qt::LeftButton)
+    {
+        DBP("鼠标左键按下\n");
+        be_draggd = true;
+        mouse_start_point = event->globalPos();
+        DBP("鼠标位置:%d %d\n", event->globalPos().x(), event->globalPos().y());
+        window_pos = parent->pos();
+    }
+}
+
+void WebView::mouseMoveEvent(QMouseEvent* event)
+{
+    DBP("MouseMoveEvent\n");
+    if (be_draggd)
+    {
+        DBP("鼠标拖动\n");
+        QPoint distance = event->globalPos() - mouse_start_point;
+        DBP("Distance:%d %d", distance.x(), distance.y());
+        parent->move(window_pos + distance);
+    }
+}
+
+
+
+void WebView::mouseReleaseEvent(QMouseEvent* event)
+{
+    if (event->button() == Qt::LeftButton)
+    {
+        be_draggd = false;
+    }
+}
+
+WebView::WebView(QString css, PageBrowser* parent)
+{
+    this->parent = parent;
     this->css = css;
     InjectCss(this->css);
 }
@@ -111,32 +179,34 @@ void WebView::LoadUrl(QString url)
     InjectCss(this->GetCss());
 }
 
-void InnerBrowser::SetWindowTitle(QString title)
+void PageBrowser::SetWindowTitle(QString title)
 {
     this->setWindowTitle(title);
     this->webview->titleChanged(title);
 }
 
-void InnerBrowser::SetCutomCSS(QString css)
+void PageBrowser::SetCutomCSS(QString css)
 {
     this->webview->ReloadCss(css);
 }
 
-void InnerBrowser::SetTransparent(int transparent)
+void PageBrowser::SetTransparent(int transparent)
 {
     double t = transparent / 100.0f;
     manager.SetTransparent(t);
     this->setWindowOpacity(t);
 }
 
-InnerBrowser::InnerBrowser()
+PageBrowser::PageBrowser()
 {
-    
+    DBP("主窗口生成\n");
     load_config();
     InitSystemTray();
     this->setWindowIcon(QIcon(":/image/ruby.png"));
     auto config = manager.GetConfig();
-    this->lock(true);
+    //this->lock(true);
+    //允许透明
+    this->setAttribute(Qt::WA_TranslucentBackground, on);
     //移动窗口
     this->move(config.x, config.y);
     //调整窗口大小
@@ -150,7 +220,8 @@ InnerBrowser::InnerBrowser()
     
     layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
-    webview = new WebView(config.css);
+    webview = new WebView(config.css, this);
+    this->webview->setContextMenuPolicy(Qt::NoContextMenu);
     this->webview->page()->setBackgroundColor(QColor(0, 0, 0, 0));
     this->webview->titleChanged(this->windowTitle());
     this->layout->addWidget(this->webview);
@@ -176,52 +247,51 @@ InnerBrowser::InnerBrowser()
 
 
 
-InnerBrowser::~InnerBrowser()
+PageBrowser::~PageBrowser()
 = default;
 
-void InnerBrowser::lock(bool on)
+void PageBrowser::lock(bool on)
 {
     this->setWindowFlag(Qt::WindowStaysOnTopHint, on);
-    this->setAttribute(Qt::WA_TranslucentBackground, on);
 }
 
-void InnerBrowser::ApplyConfig(BrowserConfig::Config config)
+void PageBrowser::ApplyConfig(BrowserConfig::Config config)
 {
     return;
 }
 
-void InnerBrowser::MoveWindow(float x, float y)
+void PageBrowser::MoveWindow(float x, float y)
 {
     this->move(x, y);
 }
 
-void InnerBrowser::ResizeWindows(float width, float height)
+void PageBrowser::ResizeWindows(float width, float height)
 {
     this->resize(width, height);
 }
 
-void InnerBrowser::ScaleWindowPage(float scale)
+void PageBrowser::ScaleWindowPage(float scale)
 {
     this->webview->page()->setZoomFactor(scale);
 }
 
-int InnerBrowser::GetTransparent()
+int PageBrowser::GetTransparent()
 {
     auto config = manager.GetConfig();
     return static_cast<int>(config.transparent * 100);
 }
 
-QString InnerBrowser::GetCss()
+QString PageBrowser::GetCss()
 {
     return webview->GetCss();
 }
 
-QString InnerBrowser::GetPageUrl()
+QString PageBrowser::GetPageUrl()
 {
     return manager.GetUrl();
 }
 
-CM_LoadConfigCondition InnerBrowser::GetLoadCondition()
+CM_LoadConfigCondition PageBrowser::GetLoadCondition()
 {
     return this->manager.GetLoadConfigCondition();
 }

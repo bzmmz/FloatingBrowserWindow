@@ -95,13 +95,13 @@
     <ClCompile Include="SourceFiles\PopDialogs\StringInputDialog.cpp" />
     <ClCompile Include="SourceFiles\Tray.cpp" />
     <ClCompile Include="SourceFiles\ConfigManager.cpp" />
-    <ClCompile Include="SourceFiles\InnerBrowser.cpp" />
+    <ClCompile Include="SourceFiles\PageBrowser.cpp" />
     <ClCompile Include="SourceFiles\main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_ControlPanel.h" />
     <ClInclude Include="HeaderFiles\PopDialogs\uic\ui_StringInputDialog.h" />
-    <QtMoc Include="HeaderFiles\InnerBrowser.h" />
+    <QtMoc Include="HeaderFiles\PageBrowser.h" />
     <ClInclude Include="HeaderFiles\json.hpp" />
     <ClInclude Include="HeaderFiles\ConfigManager.h" />
     <QtMoc Include="HeaderFiles\PopDialogs\ControlPanel.h" />

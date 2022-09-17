@@ -1,7 +1,7 @@
 #include <iostream>
 #include <QApplication>
 #include "ConfigManager.h"
-#include "InnerBrowser.h"
+#include "PageBrowser.h"
 #include "StringHelper.h"
 #include <QTextCodec>
 //class MainWindow : public QMainWindow
@@ -13,7 +13,7 @@
 //    MainWindow()
 //    {
 //        ui.setupUi(this);
-//        auto browser = new InnerBrowser();
+//        auto browser = new PageBrowser();
 //        this->setCentralWidget(browser);
 //    }
 //};
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
         
     //Test();
     a->setQuitOnLastWindowClosed(true);
-    auto browser = new InnerBrowser();
+    auto browser = new PageBrowser();
     int code = a->exec();
     return code;
 

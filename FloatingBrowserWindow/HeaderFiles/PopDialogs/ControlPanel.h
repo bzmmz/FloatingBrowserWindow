@@ -2,7 +2,7 @@
 #include "Tray.h"
 #include "ui_ControlPanel.h"
 class Tray;
-class InnerBrowser;
+class PageBrowser;
 /**
  * 控制面板
  */
@@ -10,7 +10,7 @@ class ControlPanel : public QMainWindow
 {
     Q_OBJECT
 public:
-    ControlPanel(InnerBrowser* parent);
+    ControlPanel(PageBrowser* parent);
 signals:
     void ModifyTitleSignal(QString title);
     void ModifyCSSSignal(QString css);

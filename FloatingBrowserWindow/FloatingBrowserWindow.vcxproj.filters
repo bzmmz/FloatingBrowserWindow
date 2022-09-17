@@ -26,7 +26,7 @@
     <ClCompile Include="SourceFiles\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SourceFiles\InnerBrowser.cpp">
+    <ClCompile Include="SourceFiles\PageBrowser.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="SourceFiles\ConfigManager.cpp">
@@ -82,7 +82,7 @@
     <QtMoc Include="HeaderFiles\Tray.h">
       <Filter>Header Files</Filter>
     </QtMoc>
-    <QtMoc Include="HeaderFiles\InnerBrowser.h">
+    <QtMoc Include="HeaderFiles\PageBrowser.h">
       <Filter>Header Files</Filter>
     </QtMoc>
     <QtMoc Include="HeaderFiles\PopDialogs\ControlPanel.h">

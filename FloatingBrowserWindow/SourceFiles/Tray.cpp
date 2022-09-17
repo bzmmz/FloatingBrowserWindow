@@ -1,5 +1,5 @@
 ﻿#include "Tray.h"
-#include "InnerBrowser.h"
+#include "PageBrowser.h"
 #include "StringHelper.h"
 void Tray::Init()
 {
@@ -9,7 +9,7 @@ void Tray::Init()
     trayicon->setToolTip(QStringLiteral("悬浮窗小工具"));
     trayicon->setIcon(QIcon(":/image/ruby.png"));
     //绑定点击托盘的函数
-    connect(trayicon, &QSystemTrayIcon::activated, window, &InnerBrowser::IconClicked);
+    connect(trayicon, &QSystemTrayIcon::activated, window, &PageBrowser::IconClicked);
 
 
     trayicon->show();
@@ -59,7 +59,7 @@ void Tray::ShowWindowLoadConfigInfo()
     ShowMessage(message);
 }
 
-Tray::Tray(InnerBrowser* window)
+Tray::Tray(PageBrowser* window)
 {
     this->window = window;
     Init();
@@ -73,7 +73,7 @@ void Tray::ShowMenu()
     menu->exec(Pos);
 }
 
-InnerBrowser* Tray::GetWindow()
+PageBrowser* Tray::GetWindow()
 {
     return window;
 }
