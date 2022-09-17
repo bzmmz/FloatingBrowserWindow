@@ -15,7 +15,7 @@ public:
     void LoadUrl(QString url);
     QString GetCss();
     void SetMouseEventTransparent(bool m);
-
+    void SetFreeMove(bool m);
 private:
     //拼接脚本
     QString CombineScript(QString css);
@@ -26,6 +26,7 @@ private:
     QString java_script;
     QWebEngineScript *script_engine;
     bool mouse_transparent = false;
+    bool free_move = true;
     
 
     const QString JS_LOAD_CSS_FROM_STR = "'(function(){\\nlet style_node = document.createElement(\\'style\\');\\nstyle_node.append(document.createTextNode(`\\n";
@@ -61,7 +62,7 @@ public slots:
     void SetTransparent(int transparent);
     void ClearCss();
     void ChangeUrl(QString url);
-    void lock(bool on);
+    void lock(bool locked);
 signals:
     void MainWindowCloseSignal();
 public:
@@ -72,7 +73,9 @@ public:
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
     void SetMouseEventTransparent(bool m);
+    void SetFreeMove(bool move);
     int GetTransparent();
+    
     QString GetCss();
     QString GetPageUrl();
     CM_LoadConfigCondition GetLoadCondition();

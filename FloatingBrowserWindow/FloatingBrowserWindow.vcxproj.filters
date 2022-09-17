@@ -78,13 +78,13 @@
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.json" />
-    <None Include="style.css" />
-    <None Include="style.qss" />
-  </ItemGroup>
-  <ItemGroup>
     <QtRcc Include="Resources\Resource.qrc">
       <Filter>Resource Files</Filter>
     </QtRcc>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resources\icon.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

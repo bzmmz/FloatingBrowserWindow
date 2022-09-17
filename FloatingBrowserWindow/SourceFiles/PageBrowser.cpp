@@ -37,7 +37,7 @@ void PageBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
         this->show();
     }
     //右键显示菜单
-    else if(reason == QSystemTrayIcon::Context)
+    else if (reason == QSystemTrayIcon::Context)
     {
         tray->ShowMenu();
     }
@@ -56,21 +56,25 @@ void PageBrowser::closeEvent(QCloseEvent* event)
     }
 }
 
-
 bool WebView::eventFilter(QObject* obj, QEvent* event)
 {
-    if (obj == child && event->type() == QEvent::MouseButtonPress)
+    //只在开启了自由移动窗口的情况下额外处理,否则只用默认处理
+    if(free_move)
     {
-        mousePressEvent(static_cast<QMouseEvent*>(event));
+        if (obj == child && event->type() == QEvent::MouseButtonPress)
+        {
+            mousePressEvent(static_cast<QMouseEvent*>(event));
+        }
+        else if (obj == child && event->type() == QEvent::MouseMove)
+        {
+            mouseMoveEvent(static_cast<QMouseEvent*>(event));
+        }
+        else if (obj == child && event->type() == QEvent::MouseButtonRelease)
+        {
+            mouseReleaseEvent(static_cast<QMouseEvent*>(event));
+        }
     }
-    else if(obj == child && event->type() == QEvent::MouseMove)
-    {
-        mouseMoveEvent(static_cast<QMouseEvent*>(event));
-    }
-    else if(obj == child && event->type() == QEvent::MouseButtonRelease)
-    {
-        mouseReleaseEvent(static_cast<QMouseEvent*>(event));
-    }
+    
     return QWebEngineView::eventFilter(obj, event);
 }
 
@@ -80,7 +84,6 @@ bool WebView::event(QEvent* event)
     {
         QChildEvent* child_event = static_cast<QChildEvent*>(event);
         child = child_event->child();
-        static_cast<QOpenGLWidget*>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, mouse_transparent);
         if (child != nullptr)
         {
             child->installEventFilter(this);
@@ -91,7 +94,6 @@ bool WebView::event(QEvent* event)
 
 void WebView::mousePressEvent(QMouseEvent* event)
 {
-    DBP("MousePressEvent\n");
     if (event->button() == Qt::LeftButton)
     {
         DBP("鼠标左键按下\n");
@@ -104,17 +106,14 @@ void WebView::mousePressEvent(QMouseEvent* event)
 
 void WebView::mouseMoveEvent(QMouseEvent* event)
 {
-    DBP("MouseMoveEvent\n");
     if (be_draggd)
     {
-        DBP("鼠标拖动\n");
+        DBP("鼠标拖动\t\t");
         QPoint distance = event->globalPos() - mouse_start_point;
-        DBP("Distance:%d %d", distance.x(), distance.y());
+        DBP("Distance:%d %d\n", distance.x(), distance.y());
         parent->move(window_pos + distance);
     }
 }
-
-
 
 void WebView::mouseReleaseEvent(QMouseEvent* event)
 {
@@ -127,6 +126,7 @@ void WebView::mouseReleaseEvent(QMouseEvent* event)
 WebView::WebView(QString css, PageBrowser* parent)
 {
     this->parent = parent;
+    setMouseTracking(false);
     this->css = css;
     InjectCss(this->css);
 }
@@ -148,17 +148,23 @@ void WebView::SetMouseEventTransparent(bool m)
     mouse_transparent = m;
     this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
     static_cast<QOpenGLWidget*>(child)->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    child->installEventFilter(this);
+}
+
+void WebView::SetFreeMove(bool m)
+{
+    this->free_move = m;
 }
 
 QString WebView::CombineScript(QString css)
 {
     QString s = QString::fromLatin1("(function() {"\
-                                    "    css = document.createElement('style');"\
-                                    "    css.type = 'text/css';"\
-                                    "    css.id = 'css';"\
-                                    "    document.head.appendChild(css);"\
-                                    "    css.innerText = '%1';"\
-                                    "})()").arg(css.simplified());
+        "    css = document.createElement('style');"\
+        "    css.type = 'text/css';"\
+        "    css.id = 'css';"\
+        "    document.head.appendChild(css);"\
+        "    css.innerText = '%1';"\
+        "})()").arg(css.simplified());
     return s;
 }
 
@@ -215,7 +221,9 @@ void PageBrowser::SetTransparent(int transparent)
 
 PageBrowser::PageBrowser()
 {
+    this->setAttribute(Qt::WA_DeleteOnClose);
     DBP("主窗口生成\n");
+    setMouseTracking(false);
     load_config();
     InitSystemTray();
     this->setWindowIcon(QIcon(":/image/ruby.png"));
@@ -230,9 +238,8 @@ PageBrowser::PageBrowser()
     //调节透明度
     this->setWindowOpacity(config.transparent);
 
-
     this->setWindowTitle(config.windowtitle);
-    
+
     layout = new QHBoxLayout(this);
     layout->setContentsMargins(0, 0, 0, 0);
     webview = new WebView(config.css, this);
@@ -245,30 +252,29 @@ PageBrowser::PageBrowser()
     this->webview->load(QUrl(config.page_url));
 
     SetMouseEventTransparent(config.mouse_penetration);
+    SetFreeMove(config.free_move);
     lock(config.lock);
     //移动和缩放
     this->MoveWindow(config.x, config.y);
     this->ResizeWindows(config.width, config.height);
     this->ScaleWindowPage(config.scale);
-    this->show(); 
-    
-
+    this->show();
 }
-
-
 
 PageBrowser::~PageBrowser()
 {
+    manager->SaveCurrentConfig(this);
     delete webview;
     delete layout;
     delete manager;
     delete tray;
 }
 
-
-void PageBrowser::lock(bool on)
+void PageBrowser::lock(bool locked)
 {
-    this->setWindowFlag(Qt::WindowStaysOnTopHint, on);
+    this->setWindowFlag(Qt::WindowStaysOnTopHint, locked);
+    this->setWindowFlag(Qt::FramelessWindowHint, locked);
+    //window->setWindowFlag(Qt::Tool, locked);
 }
 
 void PageBrowser::ApplyConfig(BrowserConfig::Config config)
@@ -293,7 +299,11 @@ void PageBrowser::ScaleWindowPage(float scale)
 
 void PageBrowser::SetMouseEventTransparent(bool m)
 {
-    this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    //todo,bug
+    //同时打开鼠标穿透和窗口置顶后重新打开程序会无法解除鼠标穿透状态,
+    //注释掉这行修改主窗口的鼠标事件响应后就好了,非常迷惑.
+    //this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    this->manager->SetMousePenertration(m);
     this->webview->SetMouseEventTransparent(m);
 }
 
@@ -301,6 +311,12 @@ int PageBrowser::GetTransparent()
 {
     auto config = manager->GetConfig();
     return static_cast<int>(config.transparent * 100);
+}
+
+void PageBrowser::SetFreeMove(bool move)
+{
+    this->manager->SetFreeMove(move);
+    this->webview->SetFreeMove(move);
 }
 
 QString PageBrowser::GetCss()
@@ -317,4 +333,3 @@ CM_LoadConfigCondition PageBrowser::GetLoadCondition()
 {
     return this->manager->GetLoadConfigCondition();
 }
-

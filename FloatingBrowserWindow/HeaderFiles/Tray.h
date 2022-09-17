@@ -20,8 +20,9 @@ public:
 public slots:
     void PopControlPanel();
     void SwitchShowAndHide();
-    void SwitchLock();
+    void SwitchStayOnTop();
     void SwitchMousePenertration();
+    void SwitchFreeMove();
 private:
     void Init();
     void InitMenu();
@@ -29,7 +30,7 @@ private:
     bool show = true;
     bool locked;
     bool mouse_penetration;
-
+    bool can_free_move;
     PageBrowser* window;
     QSystemTrayIcon *trayicon;  //托盘核心
     QMenu *menu;
@@ -39,4 +40,7 @@ private:
     QAction* mouse_control;
     QAction* lock;
     QAction* reset_pos;
+    QAction* free_move;
+private slots:
+    void TrayClicked(QSystemTrayIcon::ActivationReason reason);
 };

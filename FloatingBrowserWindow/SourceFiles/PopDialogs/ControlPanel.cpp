@@ -19,7 +19,6 @@ ControlPanel::ControlPanel(PageBrowser* parent)
     connect(ui.clearcss, &QAbstractButton::clicked, this, &ControlPanel::ClearCssClicked);
     connect(this, &ControlPanel::ClearCssSignal, parent, &PageBrowser::ClearCss);
 
-
     //透明度修改
     ui.transparentEdit->setValue(parent->GetTransparent());
     ui.transparentNum->setText(QString::number(parent->GetTransparent()));
@@ -29,8 +28,6 @@ ControlPanel::ControlPanel(PageBrowser* parent)
     QRegExpValidator* validator = new QRegExpValidator(t, ui.transparentNum);
     ui.transparentNum->setValidator(validator);
     ui.transparentNum->setMaxLength(3);
-    
-
 
     //启用了跟踪的滑块拖动时就会发出信号
     connect(ui.transparentEdit, &QSlider::valueChanged, this, &ControlPanel::TransparentSliderChanged);
@@ -43,10 +40,8 @@ ControlPanel::ControlPanel(PageBrowser* parent)
     connect(ui.editUrl, &QAbstractButton::clicked, this, &ControlPanel::ModifyUrlClicked);
     connect(this, &ControlPanel::ModifyPageUrlSignal, parent, &PageBrowser::ChangeUrl);
 
-
-
     //绑定收到主窗口关闭信号的反应
-    connect(parent, &PageBrowser::MainWindowCloseSignal,this, &ControlPanel::ReceiveMainWindowCloseSignal);
+    connect(parent, &PageBrowser::MainWindowCloseSignal, this, &ControlPanel::ReceiveMainWindowCloseSignal);
 }
 
 void ControlPanel::EditTitleConfirmClicked()
@@ -79,12 +74,11 @@ void ControlPanel::TransparentNumChanged()
     {
         t = 0;
     }
-    else if(t > 100)
+    else if (t > 100)
     {
         t = 100;
     }
     ui.transparentNum->setText(QString::number(t));
-
 
     ui.transparentEdit->setValue(t);
     emit ModifyTransparentSignal(t);

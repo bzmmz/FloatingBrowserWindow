@@ -11,7 +11,7 @@ namespace BrowserConfig
 {
     struct Config
     {
-        double transparent = 50.0f;
+        double transparent = 1.0f;
         QString css;
         int x{};
         int y{};
@@ -19,10 +19,11 @@ namespace BrowserConfig
         int height = 600;
         double scale = 100;
         bool is_transparent = true;
-        QString page_url = "localhost";
+        QString page_url = "https://gitee.com/nuaalianghao/floating-browser-window/wikis/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E";
         QString windowtitle = QStringLiteral("新窗口");
         bool lock = false;
         bool mouse_penetration = false;
+        bool free_move = true;
     };
 
     void to_json(json& j, const Config& config);
@@ -61,6 +62,7 @@ public:
     void SetUrl(QString url);
     void SetLock(bool locked);
     void SetMousePenertration(bool m);
+    void SetFreeMove(bool m);
     QString GetUrl();
     BrowserConfig::Config GetConfig();
     CM_LoadConfigCondition GetLoadConfigCondition();

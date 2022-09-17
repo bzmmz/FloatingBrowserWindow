@@ -117,12 +117,10 @@
     </QtUic>
   </ItemGroup>
   <ItemGroup>
-    <None Include="config.json" />
-    <None Include="style.css" />
-    <None Include="style.qss" />
+    <QtRcc Include="Resources\Resource.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <QtRcc Include="Resources\Resource.qrc" />
+    <ResourceCompile Include="Resources\icon.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

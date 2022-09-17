@@ -21,8 +21,10 @@ int main(int argc, char *argv[])
     //Test();
     a->setQuitOnLastWindowClosed(false);
     auto browser = new PageBrowser();
-
+    a->setWindowIcon(QIcon(":image/ruby.icon"));
     int code = a->exec();
+    delete browser;
+    DBP("OVER");
     return code;
 
 }
