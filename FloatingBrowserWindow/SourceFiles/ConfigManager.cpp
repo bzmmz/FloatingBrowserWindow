@@ -16,6 +16,8 @@ void BrowserConfig::to_json(json& j, const Config& config)
         {"is_transparent", config.is_transparent},
         {"page_url", SH::qstr2str(config.page_url)},
         {"windowtitle", SH::qstr2str(config.windowtitle)},
+        {"lock", config.lock},
+        {"mouse_penetration", config.mouse_penetration}
     };
 }
 
@@ -31,6 +33,8 @@ void BrowserConfig::from_json(const json& j, Config& config)
     j.at("is_transparent").get_to(config.is_transparent);
     config.page_url = SH::str2qstr(j.at("page_url").get<string>());
     config.windowtitle = SH::str2qstr(j.at("windowtitle").get<string>());
+    j.at("lock").get_to(config.lock);
+    j.at("mouse_penetration").get_to(config.mouse_penetration);
 }
 
 
@@ -46,6 +50,13 @@ void ConfigManager::ReadWholeFile(stringstream& ss, ifstream* read)
 ConfigManager::ConfigManager()
 {
     read = new ifstream(config_file_name);
+}
+
+ConfigManager::~ConfigManager()
+{
+    SaveConfig();
+    delete read;
+    delete write;
 }
 
 
@@ -77,12 +88,7 @@ void ConfigManager::LoadConfig()
         {
             load_config_condition = CM_ERROR_CONFIG_FILE;
         }
-        
-        
-        
 
-
-        
     }
 
 }
@@ -117,6 +123,16 @@ void ConfigManager::SetTransparent(double transparent)
 void ConfigManager::SetUrl(QString url)
 {
     config.page_url = url;
+}
+
+void ConfigManager::SetLock(bool locked)
+{
+    this->config.lock = locked;
+}
+
+void ConfigManager::SetMousePenertration(bool m)
+{
+    this->config.mouse_penetration = m;
 }
 
 QString ConfigManager::GetUrl()

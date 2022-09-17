@@ -19,8 +19,10 @@ namespace BrowserConfig
         int height = 600;
         double scale = 100;
         bool is_transparent = true;
-        QString page_url = "http://localhost:12450/room/test?minGiftPrice=7&showDanmaku=true&showGift=true&showGiftName=false&mergeSimilarDanmaku=false&mergeGift=true&maxNumber=60&blockGiftDanmaku=true&blockLevel=0&blockNewbie=false&blockNotMobileVerified=false&blockKeywords=&blockUsers=&blockMedalLevel=0&relayMessagesByServer=false&autoTranslate=false&giftUsernamePronunciation=&emoticons=%5B%5D&lang=zh";
+        QString page_url = "localhost";
         QString windowtitle = QStringLiteral("新窗口");
+        bool lock = false;
+        bool mouse_penetration = false;
     };
 
     void to_json(json& j, const Config& config);
@@ -51,11 +53,14 @@ private:
 public:
     
     ConfigManager();
+    ~ConfigManager();
     void LoadConfig();
     void SaveConfig();
     void SaveCurrentConfig(PageBrowser* window);
     void SetTransparent(double transparent);
     void SetUrl(QString url);
+    void SetLock(bool locked);
+    void SetMousePenertration(bool m);
     QString GetUrl();
     BrowserConfig::Config GetConfig();
     CM_LoadConfigCondition GetLoadConfigCondition();

@@ -64,21 +64,23 @@ public slots:
 signals:
     void MainWindowCloseSignal();
 public:
-    PageBrowser();
+    PageBrowser(QApplication* main);
     ~PageBrowser() override;
     void ApplyConfig(BrowserConfig::Config config);
     void MoveWindow(float x, float y);
     void ResizeWindows(float width, float height);
     void ScaleWindowPage(float scale);
+    void SetMouseEventTransparent(bool m);
     int GetTransparent();
     QString GetCss();
     QString GetPageUrl();
     CM_LoadConfigCondition GetLoadCondition();
 private:
-    ConfigManager manager;
+    ConfigManager *manager;
     QHBoxLayout *layout;
     WebView *webview;
     Tray* tray;
+    QApplication *main;
     void load_config();
     void InitSystemTray();
     void ReloadCSS(QString css);

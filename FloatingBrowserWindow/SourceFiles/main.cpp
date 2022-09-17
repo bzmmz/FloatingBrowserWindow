@@ -4,21 +4,6 @@
 #include "PageBrowser.h"
 #include "StringHelper.h"
 #include <QTextCodec>
-//class MainWindow : public QMainWindow
-//{
-//
-//private:
-//    Ui::MainWindow ui;
-//public:
-//    MainWindow()
-//    {
-//        ui.setupUi(this);
-//        auto browser = new PageBrowser();
-//        this->setCentralWidget(browser);
-//    }
-//};
-
-
 void Test()
 {
     QString test_str = "啊哈";
@@ -33,10 +18,10 @@ int main(int argc, char *argv[])
 
 
     QTextCodec::setCodecForLocale(codec);
-        
     //Test();
-    a->setQuitOnLastWindowClosed(true);
-    auto browser = new PageBrowser();
+    a->setQuitOnLastWindowClosed(false);
+    auto browser = new PageBrowser(a);
+
     int code = a->exec();
     return code;
 

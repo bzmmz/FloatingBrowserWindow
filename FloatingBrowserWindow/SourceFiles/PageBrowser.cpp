@@ -3,7 +3,8 @@
 #include <QString>
 void PageBrowser::load_config()
 {
-    manager.LoadConfig();
+    manager = new ConfigManager();
+    manager->LoadConfig();
     return;
 }
 
@@ -24,7 +25,7 @@ void PageBrowser::ClearCss()
 
 void PageBrowser::ChangeUrl(QString url)
 {
-    manager.SetUrl(url);
+    manager->SetUrl(url);
     this->webview->LoadUrl(url);
 }
 
@@ -45,7 +46,14 @@ void PageBrowser::IconClicked(QSystemTrayIcon::ActivationReason reason)
 void PageBrowser::closeEvent(QCloseEvent* event)
 {
     emit MainWindowCloseSignal();
-    manager.SaveCurrentConfig(this);
+    manager->SaveCurrentConfig(this);
+    hide();
+    event->ignore();
+    if (tray != nullptr)
+    {
+        tray->hide_control->setText(QStringLiteral("显示窗口"));
+        tray->show = false;
+    }
 }
 
 
@@ -193,20 +201,21 @@ void PageBrowser::SetCutomCSS(QString css)
 void PageBrowser::SetTransparent(int transparent)
 {
     double t = transparent / 100.0f;
-    manager.SetTransparent(t);
+    manager->SetTransparent(t);
     this->setWindowOpacity(t);
 }
 
-PageBrowser::PageBrowser()
+PageBrowser::PageBrowser(QApplication* main)
 {
+    this->main = main;
     DBP("主窗口生成\n");
     load_config();
     InitSystemTray();
     this->setWindowIcon(QIcon(":/image/ruby.png"));
-    auto config = manager.GetConfig();
+    auto config = manager->GetConfig();
     //this->lock(true);
     //允许透明
-    this->setAttribute(Qt::WA_TranslucentBackground, on);
+    this->setAttribute(Qt::WA_TranslucentBackground, true);
     //移动窗口
     this->move(config.x, config.y);
     //调整窗口大小
@@ -248,7 +257,13 @@ PageBrowser::PageBrowser()
 
 
 PageBrowser::~PageBrowser()
-= default;
+{
+    delete webview;
+    delete layout;
+    delete manager;
+    delete tray;
+}
+
 
 void PageBrowser::lock(bool on)
 {
@@ -275,9 +290,15 @@ void PageBrowser::ScaleWindowPage(float scale)
     this->webview->page()->setZoomFactor(scale);
 }
 
+void PageBrowser::SetMouseEventTransparent(bool m)
+{
+    this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+    this->webview->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+}
+
 int PageBrowser::GetTransparent()
 {
-    auto config = manager.GetConfig();
+    auto config = manager->GetConfig();
     return static_cast<int>(config.transparent * 100);
 }
 
@@ -288,11 +309,11 @@ QString PageBrowser::GetCss()
 
 QString PageBrowser::GetPageUrl()
 {
-    return manager.GetUrl();
+    return manager->GetUrl();
 }
 
 CM_LoadConfigCondition PageBrowser::GetLoadCondition()
 {
-    return this->manager.GetLoadConfigCondition();
+    return this->manager->GetLoadConfigCondition();
 }
 
