@@ -6,6 +6,7 @@
 #include <string>
 #include "ConfigManager.h"
 #include "Tray.h"
+#include <Windows.h>
 class WebView : public QWebEngineView
 {
 public:

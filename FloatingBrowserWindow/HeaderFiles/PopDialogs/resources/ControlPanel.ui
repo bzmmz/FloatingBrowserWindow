@@ -27,7 +27,7 @@
   </property>
   <property name="windowIcon">
    <iconset resource="../../../Resources/Resource.qrc">
-    <normaloff>:/new/prefix1/宝石兽.jpg</normaloff>:/new/prefix1/宝石兽.jpg</iconset>
+    <normaloff>:/image/ruby.png</normaloff>:/image/ruby.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/*

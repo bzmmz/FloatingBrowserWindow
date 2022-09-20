@@ -299,12 +299,27 @@ void PageBrowser::ScaleWindowPage(float scale)
 
 void PageBrowser::SetMouseEventTransparent(bool m)
 {
-    //todo,bug
-    //同时打开鼠标穿透和窗口置顶后重新打开程序会无法解除鼠标穿透状态,
-    //注释掉这行修改主窗口的鼠标事件响应后就好了,非常迷惑.
+
+    //需要先设置鼠标穿透再设置其它不然无法实现鼠标穿透...
+    //而且无法实时切换
     //this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
-    this->manager->SetMousePenertration(m);
     this->webview->SetMouseEventTransparent(m);
+    this->manager->SetMousePenertration(m); //留着做记录作用
+
+    //主窗体的穿透似乎只能靠系统级API实现实时切换
+    if (m)
+    {
+        SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) |
+                      WS_EX_TRANSPARENT | WS_EX_LAYERED);
+    }
+    else
+    {
+        SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) &
+                      ~WS_EX_TRANSPARENT & ~WS_EX_LAYERED);
+    }
+   
+
+
 }
 
 int PageBrowser::GetTransparent()
