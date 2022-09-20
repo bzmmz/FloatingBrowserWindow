@@ -91,4 +91,5 @@ private slots:
     void IconClicked(QSystemTrayIcon::ActivationReason reason);
 protected:
     void closeEvent(QCloseEvent *event) override;
+    void paintEvent(QPaintEvent* event) override;
 };

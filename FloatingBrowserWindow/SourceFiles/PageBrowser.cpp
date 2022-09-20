@@ -56,6 +56,17 @@ void PageBrowser::closeEvent(QCloseEvent *event)
     }
 }
 
+void PageBrowser::paintEvent(QPaintEvent* event)
+{
+    //PaintEvent时能成功获取winID正确执行函数,paintEvent时同步隐藏窗口期间的鼠标穿透状态
+    SetMouseEventTransparent(this->manager->GetConfig().mouse_penetration);
+    //托盘的显示窗口菜单文字变更
+    tray->hide_control->setText(QStringLiteral("隐藏窗口"));
+    tray->show = true;
+    QWidget::paintEvent(event);
+}
+
+
 bool WebView::eventFilter(QObject *obj, QEvent *event)
 {
     //只在开启了自由移动窗口的情况下额外处理,否则只用默认处理
@@ -250,8 +261,9 @@ PageBrowser::PageBrowser()
     this->setLayout(this->layout);
 
     this->webview->load(QUrl(config.page_url));
+    
 
-    SetMouseEventTransparent(config.mouse_penetration);
+    
     SetFreeMove(config.free_move);
     lock(config.lock);
     //移动和缩放
@@ -259,6 +271,9 @@ PageBrowser::PageBrowser()
     this->ResizeWindows(config.width, config.height);
     this->ScaleWindowPage(config.scale);
     this->show();
+
+    //不先show的话好像拿不到winid
+    SetMouseEventTransparent(config.mouse_penetration);
 }
 
 PageBrowser::~PageBrowser()
@@ -299,26 +314,30 @@ void PageBrowser::ScaleWindowPage(float scale)
 
 void PageBrowser::SetMouseEventTransparent(bool m)
 {
-
-    //需要先设置鼠标穿透再设置其它不然无法实现鼠标穿透...
-    //而且无法实时切换
-    //this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
-    this->webview->SetMouseEventTransparent(m);
-    this->manager->SetMousePenertration(m); //留着做记录作用
-
-    //主窗体的穿透似乎只能靠系统级API实现实时切换
-    if (m)
+    //窗口隐藏的时候切换有bug会无法显示窗口,窗口隐藏期间禁用该函数.
+    //重写showevent在paintevent中强制执行一次确保状态统一
+    this->manager->SetMousePenertration(m); 
+    if (!this->isHidden())
     {
-        SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) |
-                      WS_EX_TRANSPARENT | WS_EX_LAYERED);
-    }
-    else
-    {
-        SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) &
-                      ~WS_EX_TRANSPARENT & ~WS_EX_LAYERED);
-    }
-   
+        //需要先设置鼠标穿透再设置其它不然无法实现鼠标穿透...
+        //而且无法实时切换
+        //this->setAttribute(Qt::WA_TransparentForMouseEvents, m);
+        this->webview->SetMouseEventTransparent(m);
+        
 
+        //主窗体的穿透似乎只能靠系统级API实现实时切换
+        
+        if (m)
+        {
+            SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) |
+                          WS_EX_TRANSPARENT | WS_EX_LAYERED);
+        }
+        else
+        {
+            SetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE, GetWindowLong(reinterpret_cast<HWND>(this->winId()), GWL_EXSTYLE) &
+                          ~WS_EX_TRANSPARENT & ~WS_EX_LAYERED);
+        }
+    }
 
 }
 
