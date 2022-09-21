@@ -19,7 +19,7 @@ namespace BrowserConfig
         int height = 600;
         double scale = 100;
         bool is_transparent = true;
-        QString page_url = "https://gitee.com/nuaalianghao/floating-browser-window/wikis/%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E";
+        QString page_url = "https://gitee.com/nuaalianghao/floating-browser-window/wikis/pages";
         QString windowtitle = QStringLiteral("新窗口");
         bool lock = false;
         bool mouse_penetration = false;
