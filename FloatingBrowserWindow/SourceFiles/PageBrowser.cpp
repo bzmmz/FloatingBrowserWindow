@@ -59,10 +59,13 @@ void PageBrowser::closeEvent(QCloseEvent *event)
 void PageBrowser::paintEvent(QPaintEvent* event)
 {
     //PaintEvent时能成功获取winID正确执行函数,paintEvent时同步隐藏窗口期间的鼠标穿透状态
-    SetMouseEventTransparent(this->manager->GetConfig().mouse_penetration);
-    //托盘的显示窗口菜单文字变更
-    tray->hide_control->setText(QStringLiteral("隐藏窗口"));
-    tray->show = true;
+    if (refresh)
+    {
+        SetMouseEventTransparent(this->manager->GetConfig().mouse_penetration);
+        ////托盘的显示窗口菜单文字变更
+        tray->hide_control->setText(QStringLiteral("隐藏窗口"));
+        tray->show = true;
+    }
     QWidget::paintEvent(event);
 }
 
@@ -316,9 +319,11 @@ void PageBrowser::SetMouseEventTransparent(bool m)
 {
     //窗口隐藏的时候切换有bug会无法显示窗口,窗口隐藏期间禁用该函数.
     //重写showevent在paintevent中强制执行一次确保状态统一
-    this->manager->SetMousePenertration(m); 
+    this->manager->SetMousePenertration(m);
+    refresh = true;
     if (!this->isHidden())
     {
+        refresh = false;
         //需要先设置鼠标穿透再设置其它不然无法实现鼠标穿透...
         //而且无法实时切换
         //this->setAttribute(Qt::WA_TransparentForMouseEvents, m);

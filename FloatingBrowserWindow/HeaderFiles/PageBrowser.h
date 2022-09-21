@@ -85,6 +85,7 @@ private:
     void load_config();
     void InitSystemTray();
     void ReloadCSS(QString css);
+    bool refresh = false;
 
 private slots:
     //点击托盘时的响应函数
